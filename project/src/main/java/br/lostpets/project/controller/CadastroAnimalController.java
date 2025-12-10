@@ -3,6 +3,8 @@ package br.lostpets.project.controller;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,20 +12,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import br.lostpets.project.components.CadastroPessoaAnimalComponent;
 import br.lostpets.project.model.Endereco;
 import br.lostpets.project.model.PetPerdido;
 import br.lostpets.project.model.Usuario;
+import br.lostpets.project.service.AddressService;
+import br.lostpets.project.service.ImageStorageService;
 import br.lostpets.project.service.PdfRequestService;
 import br.lostpets.project.service.PetPerdidoService;
 import br.lostpets.project.service.UsuarioService;
-import br.lostpets.project.service.ViaCep;
-import br.lostpets.project.utils.GoogleDriveConfig;
 
+/**
+ * Controller for lost pet registration.
+ * 
+ * Refactoring improvements:
+ * - Uses ImageStorageService to eliminate duplicated upload code
+ * - Uses AddressService for coordinate lookup
+ * - Added proper logging
+ * - Improved error handling
+ */
 @Controller
 public class CadastroAnimalController {
+
+	private static final Logger logger = LoggerFactory.getLogger(CadastroAnimalController.class);
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -33,18 +45,20 @@ public class CadastroAnimalController {
 
 	@Autowired
 	private PetPerdidoService petPerdidoService;
+	
+	@Autowired
+	private ImageStorageService imageStorageService;
+	
+	@Autowired
+	private AddressService addressService;
+	
 	private ModelAndView modelAndView;
-	private Usuario usuario;
-	private PetPerdido petPerdido;
-	private CadastroPessoaAnimalComponent cadastroPessoaAnimal = new CadastroPessoaAnimalComponent();
-
 	private static boolean cadastrado;
-	private ViaCep viaCep = new ViaCep();
-	private Endereco endereco = new Endereco();
 
 	@GetMapping("/LostPets/Cadastro-Animal-Perdido")
 	public ModelAndView PaginaCadastroAnimalPerdido() {
 		modelAndView = new ModelAndView();
+		CadastroPessoaAnimalComponent cadastroPessoaAnimal = new CadastroPessoaAnimalComponent();
 		modelAndView.addObject("pet", cadastroPessoaAnimal);
 		modelAndView.setViewName("cadastroAnimalPerdido");
 		return modelAndView;
@@ -55,36 +69,42 @@ public class CadastroAnimalController {
 			CadastroPessoaAnimalComponent cadastroPessoaAnimal) throws IOException, GeneralSecurityException {
 
 		Usuario usuario1 = cadastroPessoaAnimal.getUsuario();
-		petPerdido = cadastroPessoaAnimal.getPetPerdido();
+		PetPerdido petPerdido = cadastroPessoaAnimal.getPetPerdido();
 
-		usuario = usuarioService.verificarEmailUsuario(usuario1.getEmail());
+		// Check if user already exists
+		Usuario usuario = usuarioService.verificarEmailUsuario(usuario1.getEmail());
 		
-		endereco = viaCep.getLatitudeLongitude(petPerdido.getCep());
+		// Get coordinates from CEP using AddressService
+		Endereco endereco = addressService.getCoordinatesFromCep(petPerdido.getCep());
 
 		petPerdido.setStatus("P");
-		petPerdido.setLatitude(endereco.getLatitude());
-		petPerdido.setLongitude(endereco.getLongitude());
+		if (endereco != null) {
+			petPerdido.setLatitude(endereco.getLatitude());
+			petPerdido.setLongitude(endereco.getLongitude());
+		} else {
+			logger.warn("Could not retrieve coordinates for CEP: {}", petPerdido.getCep());
+		}
 
+		// Upload image using ImageStorageService
+		String imageUrl = imageStorageService.uploadPetImage(files);
+		if (imageUrl != null) {
+			petPerdido.setPathImg(imageUrl);
+		} else {
+			logger.warn("No image uploaded for pet: {}", petPerdido.getNomeAnimal());
+		}
+
+		// Save pet with existing or new user
 		if (usuario != null) {
-
 			petPerdido.setUsuario(usuario);
-			
-			for (MultipartFile file : files) {
-				petPerdido.setPathImg("https://drive.google.com/uc?id="+GoogleDriveConfig.uploadFile(file));
-			}
-			
 			petPerdidoService.salvarPet(petPerdido);
+			logger.info("Saved pet {} for existing user {}", petPerdido.getNomeAnimal(), usuario.getEmail());
 		} else {
 			usuario1 = usuarioService.salvarUsuario(usuario1);
-			
 			petPerdido.setUsuario(usuario1);
-			
-			for (MultipartFile file : files) {
-				petPerdido.setPathImg("https://drive.google.com/uc?id="+GoogleDriveConfig.uploadFile(file));
-			}
-			
 			petPerdidoService.salvarPet(petPerdido);
+			logger.info("Saved pet {} for new user {}", petPerdido.getNomeAnimal(), usuario1.getEmail());
 		}
+		
 		cadastrado = true;
 		
 		return new ModelAndView("redirect:/LostPets?pdf="+pdf.downloadPdf(petPerdido));

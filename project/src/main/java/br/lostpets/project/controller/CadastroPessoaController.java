@@ -5,6 +5,8 @@ import java.security.GeneralSecurityException;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,24 +17,36 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.lostpets.project.model.Usuario;
+import br.lostpets.project.service.ImageStorageService;
 import br.lostpets.project.service.UsuarioService;
-import br.lostpets.project.utils.GoogleDriveConfig;
 
+/**
+ * Controller for user registration.
+ * 
+ * Refactoring improvements:
+ * - Uses ImageStorageService to eliminate duplicated upload code
+ * - Added proper logging
+ * - Improved code readability
+ */
 @Controller
 public class CadastroPessoaController {
 
+	private static final Logger logger = LoggerFactory.getLogger(CadastroPessoaController.class);
+
 	@Autowired
 	private UsuarioService usuarioService;
-	private ModelAndView modelAndView = new ModelAndView();
 	
-	private Usuario usuario;
+	@Autowired
+	private ImageStorageService imageStorageService;
+	
+	private ModelAndView modelAndView = new ModelAndView();
 	
 	@Autowired
 	private LoginController login;
 	
 	@GetMapping("/LostPets/Cadastro")
 	public ModelAndView cadastroPage() {
-		usuario = new Usuario();
+		Usuario usuario = new Usuario();
 		modelAndView.addObject("usuario", usuario);
 		modelAndView.setViewName("cadastroPessoa");
 		return modelAndView;
@@ -42,45 +56,47 @@ public class CadastroPessoaController {
 	public ModelAndView cadastrar(@RequestParam(value = "files") MultipartFile[] files, @Valid Usuario usuario,
 			BindingResult bindingResult) throws IOException, GeneralSecurityException  {
 
-		Usuario usuario2 = usuarioService.verificarEmailUsuario(usuario.getEmail());
-		
+		// Check for validation errors
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("cadastroPessoa");			
+			modelAndView.setViewName("cadastroPessoa");
+			return modelAndView;
 		} 
-		else if (usuarioService.verificarEmail(usuario.getEmail())) {
+		
+		// Check if email is already registered
+		if (usuarioService.verificarEmail(usuario.getEmail())) {
 			modelAndView.addObject("mensagem", MensagensAlertas.EMAIL_JA_CADASTRADO.getMensagem());
 			modelAndView.setViewName("cadastroPessoa");
-		} 
-		else {
-			if(usuario2 == null) {
-				
-				for (MultipartFile file : files) {
-					if(!file.isEmpty())
-						usuario.setIdImagem("https://drive.google.com/uc?id="+GoogleDriveConfig.uploadFile(file));
-				}
-				
-				usuarioService.salvarUsuario(usuario); 
-				return login.logar(usuario);
-			}
-			else {
-				
-				for (MultipartFile file : files) {
-					if(!file.isEmpty())
-						usuario.setIdImagem("https://drive.google.com/uc?id="+GoogleDriveConfig.uploadFile(file));
-				}
-				
-				usuario2.setBairro(usuario.getBairro());
-				usuario2.setCep(usuario.getCep());
-				usuario2.setCidade(usuario.getCidade());
-				usuario2.setRua(usuario.getRua());
-				usuario2.setUf(usuario.getSenha());
-				usuario2.setSenha(usuario.getSenha());
-				usuarioService.salvarUsuario(usuario2);				
-				return login.logar(usuario);
-			}		
-			
+			return modelAndView;
 		}
-		return modelAndView;
+		
+		Usuario usuario2 = usuarioService.verificarEmailUsuario(usuario.getEmail());
+		
+		// Upload profile image using ImageStorageService
+		String imageUrl = imageStorageService.uploadUserProfileImage(files);
+		if (imageUrl != null) {
+			usuario.setIdImagem(imageUrl);
+		}
+		
+		if (usuario2 == null) {
+			// New user registration
+			usuarioService.salvarUsuario(usuario);
+			logger.info("New user registered: {}", usuario.getEmail());
+			return login.logar(usuario);
+		} else {
+			// Update existing user
+			usuario2.setBairro(usuario.getBairro());
+			usuario2.setCep(usuario.getCep());
+			usuario2.setCidade(usuario.getCidade());
+			usuario2.setRua(usuario.getRua());
+			usuario2.setUf(usuario.getUf());
+			usuario2.setSenha(usuario.getSenha());
+			if (imageUrl != null) {
+				usuario2.setIdImagem(imageUrl);
+			}
+			usuarioService.salvarUsuario(usuario2);
+			logger.info("Updated existing user: {}", usuario2.getEmail());
+			return login.logar(usuario);
+		}
 	}
 	
 }

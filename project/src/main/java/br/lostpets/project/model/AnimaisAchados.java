@@ -56,7 +56,7 @@ public class AnimaisAchados {
 	@Column(name="DATA_ENCONTRADO")	private Date dataEncontrado;
 	@Column(name="PONTOS") private int pontos;
 	@Column(name="LATITUDE") private String latitude;
-	@Column(name="LONGIUDE") private String longitude;
+	@Column(name="LONGITUDE") private String longitude;
 	@Column(name="STATUS") private String status;
 	@Column(name="ADD_DATA") private Date addData;
 	

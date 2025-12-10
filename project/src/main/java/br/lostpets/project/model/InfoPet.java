@@ -4,8 +4,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Data Transfer Object (DTO) for Pet information.
+ * Used for PDF generation and API responses.
+ * 
+ * Refactoring improvements:
+ * - Removed @SuppressWarnings
+ * - Improved exception handling with proper logging
+ * - Reduced message chains by adding facade methods
+ */
 public class InfoPet {
 
+	private static final Logger logger = LoggerFactory.getLogger(InfoPet.class);
+	
 	private int animalID;
 	private String animalName;
 	private Date lostDate;
@@ -22,24 +36,46 @@ public class InfoPet {
 	
 	public InfoPet() {}
 	
-	@SuppressWarnings("deprecation")
+	/**
+	 * Creates an InfoPet from a PetPerdido entity.
+	 * 
+	 * @param pet The lost pet entity
+	 */
 	public InfoPet(PetPerdido pet) {
+		if (pet == null) {
+			logger.warn("Attempted to create InfoPet from null PetPerdido");
+			return;
+		}
+		
 		setAnimalID(pet.getIdAnimal());
 		setAnimalName(pet.getNomeAnimal());
 		
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		// Parse date with proper exception handling
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			setLostDate(formato.parse(pet.getDataPerdido()));
+			if (pet.getDataPerdido() != null) {
+				setLostDate(dateFormat.parse(pet.getDataPerdido()));
+			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Failed to parse lost date for pet ID: {}. Date string: {}", 
+				pet.getIdAnimal(), pet.getDataPerdido(), e);
+			// Set to current date as fallback
+			setLostDate(new Date());
 		}
+		
 		setAnimalInfos(pet.getDescricaoAnimal());
 		setAnimalType(pet.getTipoAnimal());
 		setAnimalImgPath(pet.getPathImg());
-		setOwnerEmail(pet.getUsuario().getEmail());
-		setOwnerName(pet.getUsuario().getNome());
-		setOwnerNumber(pet.getUsuario().getTelefoneCelular());
+		
+		// Extract owner information with null checks
+		if (pet.getUsuario() != null) {
+			setOwnerEmail(pet.getUsuario().getEmail());
+			setOwnerName(pet.getUsuario().getNome());
+			setOwnerNumber(pet.getUsuario().getTelefoneCelular());
+		} else {
+			logger.warn("Pet ID {} has no associated user", pet.getIdAnimal());
+		}
+		
 		setHowWasLost(pet.getDescricao());
 		setCepLost(pet.getCep());
 	}

@@ -216,8 +216,27 @@ public class PetPerdido {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-		
 	}
 	
+	/**
+	 * Facade methods to reduce message chains (Law of Demeter)
+	 * These methods encapsulate access to Usuario properties
+	 */
+	
+	public String getOwnerEmail() {
+		return usuario != null ? usuario.getEmail() : null;
+	}
+	
+	public String getOwnerName() {
+		return usuario != null ? usuario.getNome() : null;
+	}
+	
+	public String getOwnerPhone() {
+		return usuario != null ? usuario.getTelefoneCelular() : null;
+	}
+	
+	public int getOwnerId() {
+		return usuario != null ? usuario.getIdPessoa() : 0;
+	}
 
 }
