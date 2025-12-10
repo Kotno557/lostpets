@@ -541,7 +541,7 @@ public class ServiceGeral {
 
 ---
 
-## There are uncalled or unneeded procedures or any unreachable code（未呼叫或不需要的程式碼）
+## Uncalled or unneeded procedures or any unreachable code（未呼叫或不需要的程式碼）
 
 - 代表位置：
   - `utils/ConverterCSV.java`：建構子中直接執行檔案轉換與匯入流程，該工具類別似乎在 Web 應用啟動中未被呼叫（且含 I/O 與 System.exit）。
