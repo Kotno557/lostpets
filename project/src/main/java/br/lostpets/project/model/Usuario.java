@@ -223,14 +223,184 @@ public class Usuario{
 				+ ", ultimoAcesso=" + ultimoAcesso + "]";
 	}
 
+	/**
+	 * Sets the address information from an Endereco value object.
+	 * Addresses the Data Clumps code smell by centralizing address field management.
+	 */
 	public void setEndereco(Endereco endereco) {
+		if (endereco == null) {
+			return;
+		}
 		this.bairro = endereco.getBairro();
 		this.cidade = endereco.getLocalidade();
 		this.uf = endereco.getUf();
 		this.rua = endereco.getLogradouro();
-		this.latitude = (endereco.getLatitude() == 0.0)? 0 : endereco.getLatitude();
+		this.latitude = (endereco.getLatitude() == 0.0) ? 0 : endereco.getLatitude();
 		this.longitude = endereco.getLongitude();
+		this.cep = endereco.getCep();
+	}
+	
+	/**
+	 * Gets the address information as an Endereco value object.
+	 * Addresses the Data Clumps code smell by encapsulating address fields.
+	 * 
+	 * @return Endereco object containing all address fields
+	 */
+	public Endereco getEndereco() {
+		Endereco endereco = new Endereco();
+		endereco.setCep(this.cep);
+		endereco.setLogradouro(this.rua);
+		endereco.setBairro(this.bairro);
+		endereco.setLocalidade(this.cidade);
+		endereco.setUf(this.uf);
+		endereco.setLatitude(this.latitude);
+		endereco.setLongitude(this.longitude);
+		return endereco;
+	}
+	
+	/**
+	 * Builder pattern implementation for Usuario.
+	 * Addresses the Long Parameter List code smell.
+	 * 
+	 * Usage example:
+	 * <pre>
+	 * Usuario usuario = Usuario.builder()
+	 *     .nome("João Silva")
+	 *     .email("joao@email.com")
+	 *     .telefoneCelular("11987654321")
+	 *     .endereco(endereco)
+	 *     .build();
+	 * </pre>
+	 */
+	public static class Builder {
+		private String nome;
+		private String telefoneFixo;
+		private String telefoneCelular;
+		private String email;
+		private String senha;
+		private String idImagem;
+		private String cep;
+		private String rua;
+		private String bairro;
+		private String cidade;
+		private String uf;
+		private double latitude;
+		private double longitude;
 		
+		public Builder nome(String nome) {
+			this.nome = nome;
+			return this;
+		}
+		
+		public Builder telefoneFixo(String telefoneFixo) {
+			this.telefoneFixo = telefoneFixo;
+			return this;
+		}
+		
+		public Builder telefoneCelular(String telefoneCelular) {
+			this.telefoneCelular = telefoneCelular;
+			return this;
+		}
+		
+		public Builder email(String email) {
+			this.email = email;
+			return this;
+		}
+		
+		public Builder senha(String senha) {
+			this.senha = senha;
+			return this;
+		}
+		
+		public Builder idImagem(String idImagem) {
+			this.idImagem = idImagem;
+			return this;
+		}
+		
+		public Builder cep(String cep) {
+			this.cep = cep;
+			return this;
+		}
+		
+		public Builder rua(String rua) {
+			this.rua = rua;
+			return this;
+		}
+		
+		public Builder bairro(String bairro) {
+			this.bairro = bairro;
+			return this;
+		}
+		
+		public Builder cidade(String cidade) {
+			this.cidade = cidade;
+			return this;
+		}
+		
+		public Builder uf(String uf) {
+			this.uf = uf;
+			return this;
+		}
+		
+		public Builder latitude(double latitude) {
+			this.latitude = latitude;
+			return this;
+		}
+		
+		public Builder longitude(double longitude) {
+			this.longitude = longitude;
+			return this;
+		}
+		
+		/**
+		 * Sets all address-related fields from an Endereco value object.
+		 * Addresses the Data Clumps code smell.
+		 */
+		public Builder endereco(Endereco endereco) {
+			if (endereco != null) {
+				this.cep = endereco.getCep();
+				this.rua = endereco.getLogradouro();
+				this.bairro = endereco.getBairro();
+				this.cidade = endereco.getLocalidade();
+				this.uf = endereco.getUf();
+				this.latitude = endereco.getLatitude();
+				this.longitude = endereco.getLongitude();
+			}
+			return this;
+		}
+		
+		/**
+		 * Builds and returns the Usuario instance.
+		 * 
+		 * @return Usuario instance with all configured fields
+		 */
+		public Usuario build() {
+			Usuario usuario = new Usuario();
+			usuario.nome = this.nome;
+			usuario.telefoneFixo = this.telefoneFixo;
+			usuario.telefoneCelular = this.telefoneCelular;
+			usuario.email = this.email;
+			usuario.senha = this.senha;
+			usuario.idImagem = this.idImagem;
+			usuario.cep = this.cep;
+			usuario.rua = this.rua;
+			usuario.bairro = this.bairro;
+			usuario.cidade = this.cidade;
+			usuario.uf = this.uf;
+			usuario.latitude = this.latitude;
+			usuario.longitude = this.longitude;
+			usuario.addCadastro = usuario.dataHora();
+			return usuario;
+		}
+	}
+	
+	/**
+	 * Creates a new Builder instance for fluent object construction.
+	 * 
+	 * @return new Builder instance
+	 */
+	public static Builder builder() {
+		return new Builder();
 	}
 	
 }

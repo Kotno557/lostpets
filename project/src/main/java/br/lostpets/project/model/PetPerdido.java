@@ -238,5 +238,199 @@ public class PetPerdido {
 	public int getOwnerId() {
 		return usuario != null ? usuario.getIdPessoa() : 0;
 	}
+	
+	/**
+	 * Sets the address information from an Endereco value object.
+	 * Addresses the Data Clumps code smell by centralizing address field management.
+	 */
+	public void setEndereco(Endereco endereco) {
+		if (endereco == null) {
+			return;
+		}
+		this.cep = endereco.getCep();
+		this.rua = endereco.getLogradouro();
+		this.bairro = endereco.getBairro();
+		this.cidade = endereco.getLocalidade();
+		this.uf = endereco.getUf();
+		this.latitude = endereco.getLatitude();
+		this.longitude = endereco.getLongitude();
+	}
+	
+	/**
+	 * Gets the address information as an Endereco value object.
+	 * Addresses the Data Clumps code smell by encapsulating address fields.
+	 * 
+	 * @return Endereco object containing all address fields
+	 */
+	public Endereco getEndereco() {
+		Endereco endereco = new Endereco();
+		endereco.setCep(this.cep);
+		endereco.setLogradouro(this.rua);
+		endereco.setBairro(this.bairro);
+		endereco.setLocalidade(this.cidade);
+		endereco.setUf(this.uf);
+		endereco.setLatitude(this.latitude);
+		endereco.setLongitude(this.longitude);
+		return endereco;
+	}
+	
+	/**
+	 * Builder pattern implementation for PetPerdido.
+	 * Addresses the Long Parameter List code smell.
+	 * 
+	 * Usage example:
+	 * <pre>
+	 * PetPerdido pet = PetPerdido.builder()
+	 *     .usuario(usuario)
+	 *     .nomeAnimal("Rex")
+	 *     .tipoAnimal("Cachorro")
+	 *     .endereco(endereco)
+	 *     .build();
+	 * </pre>
+	 */
+	public static class Builder {
+		private Usuario usuario;
+		private String nomeAnimal;
+		private String dataPerdido;
+		private String status = "P";  // Default status
+		private String descricao;
+		private String descricaoAnimal;
+		private String tipoAnimal;
+		private String pathImg;
+		private String cep;
+		private String rua;
+		private String bairro;
+		private String cidade;
+		private String uf;
+		private double latitude;
+		private double longitude;
+		
+		public Builder usuario(Usuario usuario) {
+			this.usuario = usuario;
+			return this;
+		}
+		
+		public Builder nomeAnimal(String nomeAnimal) {
+			this.nomeAnimal = nomeAnimal;
+			return this;
+		}
+		
+		public Builder dataPerdido(String dataPerdido) {
+			this.dataPerdido = dataPerdido;
+			return this;
+		}
+		
+		public Builder status(String status) {
+			this.status = status;
+			return this;
+		}
+		
+		public Builder descricao(String descricao) {
+			this.descricao = descricao;
+			return this;
+		}
+		
+		public Builder descricaoAnimal(String descricaoAnimal) {
+			this.descricaoAnimal = descricaoAnimal;
+			return this;
+		}
+		
+		public Builder tipoAnimal(String tipoAnimal) {
+			this.tipoAnimal = tipoAnimal;
+			return this;
+		}
+		
+		public Builder pathImg(String pathImg) {
+			this.pathImg = pathImg;
+			return this;
+		}
+		
+		public Builder cep(String cep) {
+			this.cep = cep;
+			return this;
+		}
+		
+		public Builder rua(String rua) {
+			this.rua = rua;
+			return this;
+		}
+		
+		public Builder bairro(String bairro) {
+			this.bairro = bairro;
+			return this;
+		}
+		
+		public Builder cidade(String cidade) {
+			this.cidade = cidade;
+			return this;
+		}
+		
+		public Builder uf(String uf) {
+			this.uf = uf;
+			return this;
+		}
+		
+		public Builder latitude(double latitude) {
+			this.latitude = latitude;
+			return this;
+		}
+		
+		public Builder longitude(double longitude) {
+			this.longitude = longitude;
+			return this;
+		}
+		
+		/**
+		 * Sets all address-related fields from an Endereco value object.
+		 * Addresses the Data Clumps code smell.
+		 */
+		public Builder endereco(Endereco endereco) {
+			if (endereco != null) {
+				this.cep = endereco.getCep();
+				this.rua = endereco.getLogradouro();
+				this.bairro = endereco.getBairro();
+				this.cidade = endereco.getLocalidade();
+				this.uf = endereco.getUf();
+				this.latitude = endereco.getLatitude();
+				this.longitude = endereco.getLongitude();
+			}
+			return this;
+		}
+		
+		/**
+		 * Builds and returns the PetPerdido instance.
+		 * 
+		 * @return PetPerdido instance with all configured fields
+		 */
+		public PetPerdido build() {
+			PetPerdido pet = new PetPerdido();
+			pet.usuario = this.usuario;
+			pet.nomeAnimal = this.nomeAnimal;
+			pet.dataPerdido = this.dataPerdido;
+			pet.status = this.status;
+			pet.descricao = this.descricao;
+			pet.descricaoAnimal = this.descricaoAnimal;
+			pet.tipoAnimal = this.tipoAnimal;
+			pet.pathImg = this.pathImg;
+			pet.cep = this.cep;
+			pet.rua = this.rua;
+			pet.bairro = this.bairro;
+			pet.cidade = this.cidade;
+			pet.uf = this.uf;
+			pet.latitude = this.latitude;
+			pet.longitude = this.longitude;
+			pet.addData = pet.dataHora();
+			return pet;
+		}
+	}
+	
+	/**
+	 * Creates a new Builder instance for fluent object construction.
+	 * 
+	 * @return new Builder instance
+	 */
+	public static Builder builder() {
+		return new Builder();
+	}
 
 }
