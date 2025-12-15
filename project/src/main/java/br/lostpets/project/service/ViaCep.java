@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.lostpets.project.model.Endereco;
+import br.lostpets.project.model.Address;
 
 /**
  * Service for retrieving geographic coordinates from Brazilian postal codes (CEP).
@@ -50,7 +50,7 @@ public class ViaCep {
 	private static final String APP_ID = "YxULymX19IjsS2pE7KGo";
 	private static final String APP_CODE = "6isWeBIxu4YmK1hfYF6s1w";
 	
-	private Endereco endereco;
+	private Address address;
 	private Client client;
  	private WebTarget webTarget;
 // 	private final static String URL = "http://viacep.com.br/ws/";
@@ -65,9 +65,9 @@ public class ViaCep {
  	 * Retrieves latitude and longitude coordinates for a given Brazilian CEP.
  	 * 
  	 * @param cep The postal code (can include hyphen: XXXXX-XXX or without: XXXXXXXX)
- 	 * @return Endereco object containing latitude and longitude, or null if lookup fails
+ 	 * @return Address object containing latitude and longitude, or null if lookup fails
  	 */
- 	public Endereco getLatitudeLongitude(String cep) {
+ 	public Address getLatitudeLongitude(String cep) {
  		if (cep == null || cep.trim().isEmpty()) {
  			logger.warn("Attempted to lookup coordinates for null or empty CEP");
  			return null;
@@ -106,14 +106,14 @@ public class ViaCep {
 				.getJSONObject("Location")
 				.getJSONObject("DisplayPosition");
 		
-			endereco = new Endereco();
-			endereco.setLatitude(displayPosition.getDouble("Latitude"));
-			endereco.setLongitude(displayPosition.getDouble("Longitude"));
+			address = new Address();
+			address.setLatitude(displayPosition.getDouble("Latitude"));
+			address.setLongitude(displayPosition.getDouble("Longitude"));
 			
 			logger.info("Successfully retrieved coordinates for CEP {}: ({}, {})", 
-				cep, endereco.getLatitude(), endereco.getLongitude());
+				cep, address.getLatitude(), address.getLongitude());
 		
-			return endereco;
+			return address;
 			
 		} catch (Exception e) {
 			logger.error("Error retrieving coordinates for CEP: {}", cep, e);

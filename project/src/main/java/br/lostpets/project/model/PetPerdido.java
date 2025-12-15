@@ -240,38 +240,38 @@ public class PetPerdido {
 	}
 	
 	/**
-	 * Sets the address information from an Endereco value object.
+	 * Sets the address information from an Address value object.
 	 * Addresses the Data Clumps code smell by centralizing address field management.
 	 */
-	public void setEndereco(Endereco endereco) {
-		if (endereco == null) {
+	public void setAddress(Address address) {
+		if (address == null) {
 			return;
 		}
-		this.cep = endereco.getCep();
-		this.rua = endereco.getLogradouro();
-		this.bairro = endereco.getBairro();
-		this.cidade = endereco.getLocalidade();
-		this.uf = endereco.getUf();
-		this.latitude = endereco.getLatitude();
-		this.longitude = endereco.getLongitude();
+		this.cep = address.getCep();
+		this.rua = address.getLogradouro();
+		this.bairro = address.getBairro();
+		this.cidade = address.getLocalidade();
+		this.uf = address.getUf();
+		this.latitude = address.getLatitude();
+		this.longitude = address.getLongitude();
 	}
 	
 	/**
-	 * Gets the address information as an Endereco value object.
+	 * Gets the address information as an Address value object.
 	 * Addresses the Data Clumps code smell by encapsulating address fields.
 	 * 
-	 * @return Endereco object containing all address fields
+	 * @return Address object containing all address fields
 	 */
-	public Endereco getEndereco() {
-		Endereco endereco = new Endereco();
-		endereco.setCep(this.cep);
-		endereco.setLogradouro(this.rua);
-		endereco.setBairro(this.bairro);
-		endereco.setLocalidade(this.cidade);
-		endereco.setUf(this.uf);
-		endereco.setLatitude(this.latitude);
-		endereco.setLongitude(this.longitude);
-		return endereco;
+	public Address getAddress() {
+		Address address = new Address();
+		address.setCep(this.cep);
+		address.setLogradouro(this.rua);
+		address.setBairro(this.bairro);
+		address.setLocalidade(this.cidade);
+		address.setUf(this.uf);
+		address.setLatitude(this.latitude);
+		address.setLongitude(this.longitude);
+		return address;
 	}
 	
 	/**
@@ -284,7 +284,7 @@ public class PetPerdido {
 	 *     .usuario(usuario)
 	 *     .nomeAnimal("Rex")
 	 *     .tipoAnimal("Cachorro")
-	 *     .endereco(endereco)
+	 *     .address(address)
 	 *     .build();
 	 * </pre>
 	 */
@@ -381,18 +381,18 @@ public class PetPerdido {
 		}
 		
 		/**
-		 * Sets all address-related fields from an Endereco value object.
+		 * Sets all address-related fields from an Address value object.
 		 * Addresses the Data Clumps code smell.
 		 */
-		public Builder endereco(Endereco endereco) {
-			if (endereco != null) {
-				this.cep = endereco.getCep();
-				this.rua = endereco.getLogradouro();
-				this.bairro = endereco.getBairro();
-				this.cidade = endereco.getLocalidade();
-				this.uf = endereco.getUf();
-				this.latitude = endereco.getLatitude();
-				this.longitude = endereco.getLongitude();
+		public Builder address(Address address) {
+			if (address != null) {
+				this.cep = address.getCep();
+				this.rua = address.getLogradouro();
+				this.bairro = address.getBairro();
+				this.cidade = address.getLocalidade();
+				this.uf = address.getUf();
+				this.latitude = address.getLatitude();
+				this.longitude = address.getLongitude();
 			}
 			return this;
 		}

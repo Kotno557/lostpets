@@ -89,23 +89,23 @@ public class PetPerdidoBuilderTest {
 	}
 	
 	@Test
-	public void testBuilderWithEnderecoObject() {
+	public void testBuilderWithAddressObject() {
 		// Arrange
-		Endereco endereco = new Endereco();
-		endereco.setCep("04567-890");
-		endereco.setLogradouro("Rua das Flores");
-		endereco.setBairro("Jardim Paulista");
-		endereco.setLocalidade("São Paulo");
-		endereco.setUf("SP");
-		endereco.setLatitude(-23.5600);
-		endereco.setLongitude(-46.6500);
+		Address address = new Address();
+		address.setCep("04567-890");
+		address.setLogradouro("Rua das Flores");
+		address.setBairro("Jardim Paulista");
+		address.setLocalidade("São Paulo");
+		address.setUf("SP");
+		address.setLatitude(-23.5600);
+		address.setLongitude(-46.6500);
 		
 		// Act
 		PetPerdido pet = PetPerdido.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Bobby")
 			.tipoAnimal("Cachorro")
-			.endereco(endereco)
+			.address(address)
 			.build();
 		
 		// Assert
@@ -121,13 +121,13 @@ public class PetPerdidoBuilderTest {
 	}
 	
 	@Test
-	public void testBuilderWithNullEndereco() {
+	public void testBuilderWithNullAddress() {
 		// Arrange & Act
 		PetPerdido pet = PetPerdido.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Luna")
 			.tipoAnimal("Gato")
-			.endereco(null)
+			.address(null)
 			.build();
 		
 		// Assert
@@ -216,40 +216,40 @@ public class PetPerdidoBuilderTest {
 	}
 	
 	@Test
-	public void testGetEnderecoAfterBuilderWithEndereco() {
+	public void testGetAddressAfterBuilderWithAddress() {
 		// Arrange
-		Endereco originalEndereco = new Endereco();
-		originalEndereco.setCep("01310-100");
-		originalEndereco.setLogradouro("Av. Paulista");
-		originalEndereco.setBairro("Bela Vista");
-		originalEndereco.setLocalidade("São Paulo");
-		originalEndereco.setUf("SP");
-		originalEndereco.setLatitude(-23.5505);
-		originalEndereco.setLongitude(-46.6333);
+		Address originalAddress = new Address();
+		originalAddress.setCep("01310-100");
+		originalAddress.setLogradouro("Av. Paulista");
+		originalAddress.setBairro("Bela Vista");
+		originalAddress.setLocalidade("São Paulo");
+		originalAddress.setUf("SP");
+		originalAddress.setLatitude(-23.5505);
+		originalAddress.setLongitude(-46.6333);
 		
 		// Act
 		PetPerdido pet = PetPerdido.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Spike")
 			.tipoAnimal("Cachorro")
-			.endereco(originalEndereco)
+			.address(originalAddress)
 			.build();
 		
-		Endereco retrievedEndereco = pet.getEndereco();
+		Address retrievedAddress = pet.getAddress();
 		
 		// Assert
-		assertNotNull(retrievedEndereco);
-		assertEquals(originalEndereco.getCep(), retrievedEndereco.getCep());
-		assertEquals(originalEndereco.getLogradouro(), retrievedEndereco.getLogradouro());
-		assertEquals(originalEndereco.getBairro(), retrievedEndereco.getBairro());
-		assertEquals(originalEndereco.getLocalidade(), retrievedEndereco.getLocalidade());
-		assertEquals(originalEndereco.getUf(), retrievedEndereco.getUf());
-		assertEquals(originalEndereco.getLatitude(), retrievedEndereco.getLatitude(), 0.0001);
-		assertEquals(originalEndereco.getLongitude(), retrievedEndereco.getLongitude(), 0.0001);
+		assertNotNull(retrievedAddress);
+		assertEquals(originalAddress.getCep(), retrievedAddress.getCep());
+		assertEquals(originalAddress.getLogradouro(), retrievedAddress.getLogradouro());
+		assertEquals(originalAddress.getBairro(), retrievedAddress.getBairro());
+		assertEquals(originalAddress.getLocalidade(), retrievedAddress.getLocalidade());
+		assertEquals(originalAddress.getUf(), retrievedAddress.getUf());
+		assertEquals(originalAddress.getLatitude(), retrievedAddress.getLatitude(), 0.0001);
+		assertEquals(originalAddress.getLongitude(), retrievedAddress.getLongitude(), 0.0001);
 	}
 	
 	@Test
-	public void testSetEnderecoMethod() {
+	public void testSetAddressMethod() {
 		// Arrange
 		PetPerdido pet = PetPerdido.builder()
 			.usuario(testUsuario)
@@ -257,17 +257,17 @@ public class PetPerdidoBuilderTest {
 			.tipoAnimal("Cachorro")
 			.build();
 		
-		Endereco endereco = new Endereco();
-		endereco.setCep("11111-222");
-		endereco.setLogradouro("Rua Teste");
-		endereco.setBairro("Bairro Teste");
-		endereco.setLocalidade("Cidade Teste");
-		endereco.setUf("TT");
-		endereco.setLatitude(-10.0);
-		endereco.setLongitude(-20.0);
+		Address address = new Address();
+		address.setCep("11111-222");
+		address.setLogradouro("Rua Teste");
+		address.setBairro("Bairro Teste");
+		address.setLocalidade("Cidade Teste");
+		address.setUf("TT");
+		address.setLatitude(-10.0);
+		address.setLongitude(-20.0);
 		
 		// Act
-		pet.setEndereco(endereco);
+		pet.setAddress(address);
 		
 		// Assert
 		assertEquals("11111-222", pet.getCep());
@@ -280,7 +280,7 @@ public class PetPerdidoBuilderTest {
 	}
 	
 	@Test
-	public void testSetEnderecoWithNull() {
+	public void testSetAddressWithNull() {
 		// Arrange
 		PetPerdido pet = PetPerdido.builder()
 			.usuario(testUsuario)
@@ -292,7 +292,7 @@ public class PetPerdidoBuilderTest {
 		String originalCep = pet.getCep();
 		
 		// Act
-		pet.setEndereco(null);
+		pet.setAddress(null);
 		
 		// Assert - CEP should remain unchanged when null is passed
 		assertEquals(originalCep, pet.getCep());

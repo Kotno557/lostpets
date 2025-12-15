@@ -1,6 +1,12 @@
 package br.lostpets.project.model;
 
-public class Endereco {
+/**
+ * Value Object representing an address with geographic coordinates.
+ * Refactored from Address for English naming consistency.
+ * 
+ * This class encapsulates address-related fields to address the Data Clumps code smell.
+ */
+public class Address {
 
 	private String cep;
 	private String logradouro;
@@ -67,54 +73,54 @@ public class Endereco {
 		return gia;
 	}
 
-	public Endereco setCep(String cep) {
+	public Address setCep(String cep) {
 		this.cep = cep;
 		return this;
 	}
 
-	public Endereco setLogradouro(String logradouro) {
+	public Address setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 		return this;
 	}
 
-	public Endereco setComplemento(String complemento) {
+	public Address setComplemento(String complemento) {
 		this.complemento = complemento;
 		return this;
 	}
 
-	public Endereco setBairro(String bairro) {
+	public Address setBairro(String bairro) {
 		this.bairro = bairro;
 		return this;
 	}
 
-	public Endereco setLocalidade(String localidade) {
+	public Address setLocalidade(String localidade) {
 		this.localidade = localidade;
 		return this;
 	}
 
-	public Endereco setUf(String uf) {
+	public Address setUf(String uf) {
 		this.uf = uf;
 		return this;
 	}
 
-	public Endereco setUnidade(String unidade) {
+	public Address setUnidade(String unidade) {
 		this.unidade = unidade;
 		return this;
 	}
 
-	public Endereco setIbge(String ibge) {
+	public Address setIbge(String ibge) {
 		this.ibge = ibge;
 		return this;
 	}
 
-	public Endereco setGia(String gia) {
+	public Address setGia(String gia) {
 		this.gia = gia;
 		return this;
 	}
 
 	@Override
 	public String toString() {
-		return "Endereco [cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento + ", bairro="
+		return "Address [cep=" + cep + ", logradouro=" + logradouro + ", complemento=" + complemento + ", bairro="
 				+ bairro + ", localidade=" + localidade + ", uf=" + uf + ", unidade=" + unidade + ", ibge=" + ibge
 				+ ", gia=" + gia + ", latitude=" + latitude + ", longitude=" + longitude + "]";
 	}

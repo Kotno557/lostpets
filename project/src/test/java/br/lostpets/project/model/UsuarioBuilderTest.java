@@ -71,22 +71,22 @@ public class UsuarioBuilderTest {
 	}
 	
 	@Test
-	public void testBuilderWithEnderecoObject() {
+	public void testBuilderWithAddressObject() {
 		// Arrange
-		Endereco endereco = new Endereco();
-		endereco.setCep("01310-100");
-		endereco.setLogradouro("Av. Paulista");
-		endereco.setBairro("Bela Vista");
-		endereco.setLocalidade("São Paulo");
-		endereco.setUf("SP");
-		endereco.setLatitude(-23.5505);
-		endereco.setLongitude(-46.6333);
+		Address address = new Address();
+		address.setCep("01310-100");
+		address.setLogradouro("Av. Paulista");
+		address.setBairro("Bela Vista");
+		address.setLocalidade("São Paulo");
+		address.setUf("SP");
+		address.setLatitude(-23.5505);
+		address.setLongitude(-46.6333);
 		
 		// Act
 		Usuario usuario = Usuario.builder()
 			.nome("Carlos Pereira")
 			.email("carlos@email.com")
-			.endereco(endereco)
+			.address(address)
 			.build();
 		
 		// Assert
@@ -103,12 +103,12 @@ public class UsuarioBuilderTest {
 	}
 	
 	@Test
-	public void testBuilderWithNullEndereco() {
+	public void testBuilderWithNullAddress() {
 		// Arrange & Act
 		Usuario usuario = Usuario.builder()
 			.nome("Ana Costa")
 			.email("ana@email.com")
-			.endereco(null)
+			.address(null)
 			.build();
 		
 		// Assert
@@ -174,34 +174,34 @@ public class UsuarioBuilderTest {
 	}
 	
 	@Test
-	public void testGetEnderecoAfterBuilderWithEndereco() {
+	public void testGetAddressAfterBuilderWithAddress() {
 		// Arrange
-		Endereco originalEndereco = new Endereco();
-		originalEndereco.setCep("01310-100");
-		originalEndereco.setLogradouro("Av. Paulista");
-		originalEndereco.setBairro("Bela Vista");
-		originalEndereco.setLocalidade("São Paulo");
-		originalEndereco.setUf("SP");
-		originalEndereco.setLatitude(-23.5505);
-		originalEndereco.setLongitude(-46.6333);
+		Address originalAddress = new Address();
+		originalAddress.setCep("01310-100");
+		originalAddress.setLogradouro("Av. Paulista");
+		originalAddress.setBairro("Bela Vista");
+		originalAddress.setLocalidade("São Paulo");
+		originalAddress.setUf("SP");
+		originalAddress.setLatitude(-23.5505);
+		originalAddress.setLongitude(-46.6333);
 		
 		// Act
 		Usuario usuario = Usuario.builder()
 			.nome("Test User")
 			.email("test@email.com")
-			.endereco(originalEndereco)
+			.address(originalAddress)
 			.build();
 		
-		Endereco retrievedEndereco = usuario.getEndereco();
+		Address retrievedAddress = usuario.getAddress();
 		
 		// Assert
-		assertNotNull(retrievedEndereco);
-		assertEquals(originalEndereco.getCep(), retrievedEndereco.getCep());
-		assertEquals(originalEndereco.getLogradouro(), retrievedEndereco.getLogradouro());
-		assertEquals(originalEndereco.getBairro(), retrievedEndereco.getBairro());
-		assertEquals(originalEndereco.getLocalidade(), retrievedEndereco.getLocalidade());
-		assertEquals(originalEndereco.getUf(), retrievedEndereco.getUf());
-		assertEquals(originalEndereco.getLatitude(), retrievedEndereco.getLatitude(), 0.0001);
-		assertEquals(originalEndereco.getLongitude(), retrievedEndereco.getLongitude(), 0.0001);
+		assertNotNull(retrievedAddress);
+		assertEquals(originalAddress.getCep(), retrievedAddress.getCep());
+		assertEquals(originalAddress.getLogradouro(), retrievedAddress.getLogradouro());
+		assertEquals(originalAddress.getBairro(), retrievedAddress.getBairro());
+		assertEquals(originalAddress.getLocalidade(), retrievedAddress.getLocalidade());
+		assertEquals(originalAddress.getUf(), retrievedAddress.getUf());
+		assertEquals(originalAddress.getLatitude(), retrievedAddress.getLatitude(), 0.0001);
+		assertEquals(originalAddress.getLongitude(), retrievedAddress.getLongitude(), 0.0001);
 	}
 }

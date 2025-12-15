@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.lostpets.project.model.AnimaisAchados;
-import br.lostpets.project.model.Endereco;
+import br.lostpets.project.model.Address;
 import br.lostpets.project.model.PontosUsuario;
 import br.lostpets.project.model.Usuario;
 import br.lostpets.project.repository.AnimaisAchadosRepository;
@@ -35,9 +35,9 @@ public class UsuarioService {
 
 		if (usuario.getCep() != null) {
 			ViaCep viaCep = new ViaCep();
-			Endereco endereco = viaCep.getLatitudeLongitude(usuario.getCep());
-			usuario.setLatitude(endereco.getLatitude());
-			usuario.setLongitude(endereco.getLongitude());
+			Address address = viaCep.getLatitudeLongitude(usuario.getCep());
+			usuario.setLatitude(address.getLatitude());
+			usuario.setLongitude(address.getLongitude());
 		}
 		return usuarioRepository.save(usuario);
 	}

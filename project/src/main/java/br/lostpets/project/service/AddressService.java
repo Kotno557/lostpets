@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import br.lostpets.project.model.Endereco;
+import br.lostpets.project.model.Address;
 import br.lostpets.project.model.valueobject.PostalCode;
 
 /**
@@ -27,18 +27,18 @@ public class AddressService {
      * Retrieves geographic coordinates (latitude/longitude) for a given CEP.
      * 
      * @param cep Postal code (CEP) as string
-     * @return Endereco object with coordinates, or null if lookup fails
+     * @return Address object with coordinates, or null if lookup fails
      */
-    public Endereco getCoordinatesFromCep(String cep) {
+    public Address getCoordinatesFromCep(String cep) {
         if (cep == null || cep.trim().isEmpty()) {
             logger.warn("Attempted to get coordinates for null or empty CEP");
             return null;
         }
 
         try {
-            Endereco endereco = viaCep.getLatitudeLongitude(cep);
+            Address address = viaCep.getLatitudeLongitude(cep);
             logger.info("Successfully retrieved coordinates for CEP: {}", cep);
-            return endereco;
+            return address;
         } catch (Exception e) {
             logger.error("Error retrieving coordinates for CEP: {}", cep, e);
             return null;
@@ -49,9 +49,9 @@ public class AddressService {
      * Retrieves geographic coordinates using PostalCode value object.
      * 
      * @param postalCode PostalCode value object
-     * @return Endereco object with coordinates, or null if lookup fails
+     * @return Address object with coordinates, or null if lookup fails
      */
-    public Endereco getCoordinatesFromPostalCode(PostalCode postalCode) {
+    public Address getCoordinatesFromPostalCode(PostalCode postalCode) {
         if (postalCode == null) {
             logger.warn("Attempted to get coordinates for null PostalCode");
             return null;
@@ -60,41 +60,41 @@ public class AddressService {
     }
 
     /**
-     * Updates an Endereco object with coordinates based on its CEP.
+     * Updates an Address object with coordinates based on its CEP.
      * 
-     * @param endereco Endereco object with CEP set
+     * @param address Address object with CEP set
      * @return true if coordinates were successfully updated, false otherwise
      */
-    public boolean updateCoordinates(Endereco endereco) {
-        if (endereco == null || endereco.getCep() == null) {
-            logger.warn("Cannot update coordinates for null endereco or null CEP");
+    public boolean updateCoordinates(Address address) {
+        if (address == null || address.getCep() == null) {
+            logger.warn("Cannot update coordinates for null address or null CEP");
             return false;
         }
 
-        Endereco coordinates = getCoordinatesFromCep(endereco.getCep());
+        Address coordinates = getCoordinatesFromCep(address.getCep());
         if (coordinates != null) {
-            endereco.setLatitude(coordinates.getLatitude());
-            endereco.setLongitude(coordinates.getLongitude());
+            address.setLatitude(coordinates.getLatitude());
+            address.setLongitude(coordinates.getLongitude());
             return true;
         }
         return false;
     }
 
     /**
-     * Creates an Endereco object with coordinates from a CEP string.
+     * Creates an Address object with coordinates from a CEP string.
      * 
-     * @param cep Postal code string
-     * @return Endereco with coordinates, or empty Endereco if lookup fails
+     * @param cep Brazilian postal code
+     * @return Address with coordinates, or empty Address if lookup fails
      */
-    public Endereco createEnderecoWithCoordinates(String cep) {
-        Endereco endereco = getCoordinatesFromCep(cep);
-        if (endereco == null) {
-            endereco = new Endereco();
-            endereco.setCep(cep);
-            logger.warn("Created empty Endereco for CEP: {} (coordinate lookup failed)", cep);
+    public Address createAddressWithCoordinates(String cep) {
+        Address address = getCoordinatesFromCep(cep);
+        if (address == null) {
+            address = new Address();
+            address.setCep(cep);
+            logger.warn("Created empty Address for CEP: {} (coordinate lookup failed)", cep);
         } else {
-            endereco.setCep(cep);
+            address.setCep(cep);
         }
-        return endereco;
+        return address;
     }
 }

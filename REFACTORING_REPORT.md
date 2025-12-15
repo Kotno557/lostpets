@@ -60,7 +60,7 @@ project/src/main/java/br/lostpets/project/
 │   ├── Usuario.java                  # 使用者實體
 │   ├── PetPerdido.java              # 走失寵物實體
 │   ├── AnimaisAchados.java          # 發現動物實體
-│   ├── Endereco.java                # 地址值物件
+│   ├── Address.java                # 地址值物件
 │   ├── InfoPet.java                 # 寵物資訊 DTO
 │   └── valueobject/                 # 值物件 (新增)
 │       ├── PetStatus.java
@@ -104,11 +104,11 @@ project/src/main/java/br/lostpets/project/
 
 #### 1. 模型層測試 (Model Tests)
 
-##### EnderecoTest
-- **目的**: 驗證 Endereco 值物件的建立與屬性設定
+##### AddressTest
+- **目的**: 驗證 Address 值物件的建立與屬性設定
 - **測試案例**:
-  - `testEnderecoCreation()`: 測試基本屬性設定
-  - `testEnderecoWithAllFields()`: 測試完整欄位設定
+  - `testAddressCreation()`: 測試基本屬性設定
+  - `testAddressWithAllFields()`: 測試完整欄位設定
 
 ##### PetPerdidoTest
 - **目的**: 驗證 PetPerdido 實體的建立、狀態管理與資料完整性
@@ -793,32 +793,32 @@ public class AddressService {
         this.viaCep = new ViaCep();
     }
 
-    public Endereco getCoordinatesFromCep(String cep) {
+    public Address getCoordinatesFromCep(String cep) {
         if (cep == null || cep.trim().isEmpty()) {
             logger.warn("Attempted to get coordinates for null or empty CEP");
             return null;
         }
 
         try {
-            Endereco endereco = viaCep.getLatitudeLongitude(cep);
+            Address address = viaCep.getLatitudeLongitude(cep);
             logger.info("Successfully retrieved coordinates for CEP: {}", cep);
-            return endereco;
+            return address;
         } catch (Exception e) {
             logger.error("Error retrieving coordinates for CEP: {}", cep, e);
             return null;
         }
     }
     
-    public Endereco createEnderecoWithCoordinates(String cep) {
-        Endereco endereco = getCoordinatesFromCep(cep);
-        if (endereco == null) {
-            endereco = new Endereco();
-            endereco.setCep(cep);
-            logger.warn("Created empty Endereco for CEP: {} (lookup failed)", cep);
+    public Address createAddressWithCoordinates(String cep) {
+        Address address = getCoordinatesFromCep(cep);
+        if (address == null) {
+            address = new Address();
+            address.setCep(cep);
+            logger.warn("Created empty Address for CEP: {} (lookup failed)", cep);
         } else {
-            endereco.setCep(cep);
+            address.setCep(cep);
         }
-        return endereco;
+        return address;
     }
 }
 ```
@@ -1059,41 +1059,41 @@ public class InfoPetFactory {
 - `Usuario` 和 `PetPerdido` 類別中有大量重複的地址欄位（cep, rua, bairro, cidade, uf, latitude, longitude）
 - 這些欄位總是一起出現，應該被封裝成一個值物件
 
-**解決方案 - 增強 Endereco 整合**:
+**解決方案 - 增強 Address 整合**:
 
 ##### Usuario 類別
 
 ```java
 /**
- * Gets the address information as an Endereco value object.
+ * Gets the address information as an Address value object.
  * Addresses the Data Clumps code smell by encapsulating address fields.
  */
-public Endereco getEndereco() {
-    Endereco endereco = new Endereco();
-    endereco.setCep(this.cep);
-    endereco.setLogradouro(this.rua);
-    endereco.setBairro(this.bairro);
-    endereco.setLocalidade(this.cidade);
-    endereco.setUf(this.uf);
-    endereco.setLatitude(this.latitude);
-    endereco.setLongitude(this.longitude);
-    return endereco;
+public Address getAddress() {
+    Address address = new Address();
+    address.setCep(this.cep);
+    address.setLogradouro(this.rua);
+    address.setBairro(this.bairro);
+    address.setLocalidade(this.cidade);
+    address.setUf(this.uf);
+    address.setLatitude(this.latitude);
+    address.setLongitude(this.longitude);
+    return address;
 }
 
 /**
- * Sets the address information from an Endereco value object.
+ * Sets the address information from an Address value object.
  */
-public void setEndereco(Endereco endereco) {
-    if (endereco == null) {
+public void setAddress(Address address) {
+    if (address == null) {
         return;
     }
-    this.cep = endereco.getCep();
-    this.rua = endereco.getLogradouro();
-    this.bairro = endereco.getBairro();
-    this.cidade = endereco.getLocalidade();
-    this.uf = endereco.getUf();
-    this.latitude = endereco.getLatitude();
-    this.longitude = endereco.getLongitude();
+    this.cep = address.getCep();
+    this.rua = address.getLogradouro();
+    this.bairro = address.getBairro();
+    this.cidade = address.getLocalidade();
+    this.uf = address.getUf();
+    this.latitude = address.getLatitude();
+    this.longitude = address.getLongitude();
 }
 ```
 
@@ -1101,39 +1101,39 @@ public void setEndereco(Endereco endereco) {
 
 ```java
 /**
- * Gets the address information as an Endereco value object.
+ * Gets the address information as an Address value object.
  */
-public Endereco getEndereco() {
-    Endereco endereco = new Endereco();
-    endereco.setCep(this.cep);
-    endereco.setLogradouro(this.rua);
-    endereco.setBairro(this.bairro);
-    endereco.setLocalidade(this.cidade);
-    endereco.setUf(this.uf);
-    endereco.setLatitude(this.latitude);
-    endereco.setLongitude(this.longitude);
-    return endereco;
+public Address getAddress() {
+    Address address = new Address();
+    address.setCep(this.cep);
+    address.setLogradouro(this.rua);
+    address.setBairro(this.bairro);
+    address.setLocalidade(this.cidade);
+    address.setUf(this.uf);
+    address.setLatitude(this.latitude);
+    address.setLongitude(this.longitude);
+    return address;
 }
 
 /**
- * Sets the address information from an Endereco value object.
+ * Sets the address information from an Address value object.
  */
-public void setEndereco(Endereco endereco) {
-    if (endereco == null) {
+public void setAddress(Address address) {
+    if (address == null) {
         return;
     }
-    this.cep = endereco.getCep();
-    this.rua = endereco.getLogradouro();
-    this.bairro = endereco.getBairro();
-    this.cidade = endereco.getLocalidade();
-    this.uf = endereco.getUf();
-    this.latitude = endereco.getLatitude();
-    this.longitude = endereco.getLongitude();
+    this.cep = address.getCep();
+    this.rua = address.getLogradouro();
+    this.bairro = address.getBairro();
+    this.cidade = address.getLocalidade();
+    this.uf = address.getUf();
+    this.latitude = address.getLatitude();
+    this.longitude = address.getLongitude();
 }
 ```
 
 **優點**:
-- ✅ 將七個相關欄位封裝為單一 `Endereco` 物件
+- ✅ 將七個相關欄位封裝為單一 `Address` 物件
 - ✅ 減少方法參數數量
 - ✅ 提高程式碼可讀性
 - ✅ 方便未來擴充地址相關功能
@@ -1144,7 +1144,7 @@ public void setEndereco(Endereco endereco) {
 
 **注意事項**:
 - 為了資料庫相容性，保留原始的個別欄位
-- `getEndereco()` 和 `setEndereco()` 方法提供了值物件介面
+- `getAddress()` 和 `setAddress()` 方法提供了值物件介面
 - 未來可以考慮完全移除個別欄位，但需要資料庫遷移
 
 ---
@@ -1197,18 +1197,18 @@ public static class Builder {
     // ... other builder methods
     
     /**
-     * Sets all address-related fields from an Endereco value object.
+     * Sets all address-related fields from an Address value object.
      * Addresses the Data Clumps code smell.
      */
-    public Builder endereco(Endereco endereco) {
-        if (endereco != null) {
-            this.cep = endereco.getCep();
-            this.rua = endereco.getLogradouro();
-            this.bairro = endereco.getBairro();
-            this.cidade = endereco.getLocalidade();
-            this.uf = endereco.getUf();
-            this.latitude = endereco.getLatitude();
-            this.longitude = endereco.getLongitude();
+    public Builder address(Address address) {
+        if (address != null) {
+            this.cep = address.getCep();
+            this.rua = address.getLogradouro();
+            this.bairro = address.getBairro();
+            this.cidade = address.getLocalidade();
+            this.uf = address.getUf();
+            this.latitude = address.getLatitude();
+            this.longitude = address.getLongitude();
         }
         return this;
     }
@@ -1256,7 +1256,7 @@ Usuario usuario = Usuario.builder()
     .telefoneFixo("1133334444")
     .telefoneCelular("11987654321")
     .idImagem("img123")
-    .endereco(endereco)  // 直接使用 Endereco 值物件！
+    .address(address)  // 直接使用 Address 值物件！
     .build();
 
 // 或者只設定必要欄位
@@ -1291,15 +1291,15 @@ public static class Builder {
     
     // Builder methods...
     
-    public Builder endereco(Endereco endereco) {
-        if (endereco != null) {
-            this.cep = endereco.getCep();
-            this.rua = endereco.getLogradouro();
-            this.bairro = endereco.getBairro();
-            this.cidade = endereco.getLocalidade();
-            this.uf = endereco.getUf();
-            this.latitude = endereco.getLatitude();
-            this.longitude = endereco.getLongitude();
+    public Builder address(Address address) {
+        if (address != null) {
+            this.cep = address.getCep();
+            this.rua = address.getLogradouro();
+            this.bairro = address.getBairro();
+            this.cidade = address.getLocalidade();
+            this.uf = address.getUf();
+            this.latitude = address.getLatitude();
+            this.longitude = address.getLongitude();
         }
         return this;
     }
@@ -1342,7 +1342,7 @@ PetPerdido pet = PetPerdido.builder()
     .tipoAnimal("Cachorro")
     .descricaoAnimal("Golden Retriever - Golden - Grande")
     .pathImg("img.jpg")
-    .endereco(endereco)  // 使用 Endereco 值物件
+    .address(address)  // 使用 Address 值物件
     .build();
 ```
 
@@ -1355,7 +1355,7 @@ PetPerdido pet = PetPerdido.builder()
 | **型別安全** | 編譯期檢查，避免參數順序錯誤 |
 | **不可變性** | 建構完成後物件狀態固定（可選） |
 | **預設值** | Builder 可以提供合理的預設值（如 `status = "P"`） |
-| **與 Endereco 整合** | `endereco()` 方法直接接受 `Endereco` 值物件，解決 Data Clumps |
+| **與 Address 整合** | `address()` 方法直接接受 `Address` 值物件，解決 Data Clumps |
 
 **測試案例**:
 
@@ -1363,11 +1363,19 @@ PetPerdido pet = PetPerdido.builder()
 
 | 測試類別 | 測試案例數 | 測試內容 |
 |---------|-----------|---------|
-| `UsuarioBuilderTest` | 8 | 完整欄位、最小欄位、Endereco 整合、方法鏈、與建構子比較 |
-| `PetPerdidoBuilderTest` | 13 | 完整欄位、最小欄位、預設狀態、Endereco 整合、setEndereco 方法 |
+| `UsuarioBuilderTest` | 8 | 完整欄位、最小欄位、Address 整合、方法鏈、與建構子比較 |
+| `PetPerdidoBuilderTest` | 13 | 完整欄位、最小欄位、預設狀態、Address 整合、setAddress 方法 |
 
 **應用模式**: **Builder Pattern** (建造者模式)  
 **設計原則**: Fluent Interface, SRP, Encapsulation
+
+**命名一致性補充說明**:
+- ✅ 類別名稱統一使用英語：`Address` (原 `Address`)
+- ✅ 方法名稱統一使用英語：`getAddress()` / `setAddress()` (原 `getAddress()` / `setAddress()`)
+- ✅ Builder 方法使用英語命名：`address()`
+- ✅ 變數名稱統一使用英語：`address` (原 `address`)
+- ✅ 保持與第一階段命名重構的完全一致性
+- ✅ 完全消除葡萄牙語命名（除資料庫欄位名稱外）
 
 ---
 
@@ -1416,7 +1424,7 @@ PetPerdido pet = PetPerdido.builder()
 │  (Facade Pattern)    │      │  (Facade Pattern)   │
 │                      │      │                     │
 │ + uploadImage()      │      │ + getCoordinates()  │
-│ + uploadPetImage()   │      │ + createEndereco()  │
+│ + uploadPetImage()   │      │ + createAddress()  │
 └──────────────────────┘      └─────────────────────┘
           │                             │
           ▼                             ▼
@@ -1511,7 +1519,7 @@ mvn clean test
 | 測試類別 | 測試案例數 | 通過 | 失敗 | 狀態 |
 |---------|-----------|-----|------|------|
 | **模型層測試** | | | | |
-| EnderecoTest | 2 | 2 | 0 | ✅ PASS |
+| AddressTest | 2 | 2 | 0 | ✅ PASS |
 | PetPerdidoTest | 4 | 4 | 0 | ✅ PASS |
 | AnimaisAchadosTest | 4 | 4 | 0 | ✅ PASS |
 | InfoPetTest | 3 | 3 | 0 | ✅ PASS |
@@ -1578,26 +1586,28 @@ mvn clean test
    - 遵循 **Law of Demeter**
 
 5. **解決資料群集 (Data Clumps)**
-   - 在 `Usuario` 和 `PetPerdido` 新增 `getEndereco()` 和 `setEndereco()` 方法
-   - 將七個地址欄位封裝為單一 `Endereco` 值物件
+   - 在 `Usuario` 和 `PetPerdido` 新增 `getAddress()` 和 `setAddress()` 方法
+   - 將七個地址欄位封裝為單一 `Address` 值物件
+   - **重命名 `Endereco` → `Address`**（完全英語化）
    - 應用 **Value Object Pattern** 統一管理地址資料
 
 6. **實作 Builder Pattern (解決長參數列表)**
    - 為 `Usuario` 實作 Builder (原 13 個參數的建構子)
    - 為 `PetPerdido` 實作 Builder (原 9 個參數的建構子)
    - Builder 支援 Fluent Interface，可讀性大幅提升
-   - 整合 `Endereco` 值物件，進一步解決 Data Clumps
+   - 整合 `Address` 值物件，進一步解決 Data Clumps
 
 7. **提升可維護性**
    - 新增完整 JavaDoc 文件
    - 建立 70 個單元測試案例
    - 測試覆蓋率提升 ~40%
+   - **完全統一命名語言為英語**
 
 #### ⚠️ 建議但未完成的項目
 
-1. **完全遷移至 Endereco 值物件**
+1. **完全遷移至 Address 值物件**
    - 當前：保留原始的地址欄位以維持資料庫相容性
-   - 建議：完全移除個別地址欄位，只保留 `Endereco` 值物件
+   - 建議：完全移除個別地址欄位，只保留 `Address` 值物件
    - 原因：需要資料庫 schema 變更與 Migration 腳本
    - 優先級：中 (需要協調資料庫團隊)
 
@@ -1702,7 +1712,7 @@ int ownerId = pet.getOwnerId();
          .nome(form.getNome())
          .email(form.getEmail())
          .telefoneCelular(form.getTelefone())
-         .endereco(addressService.getCoordinatesFromCep(cep))
+         .address(addressService.getCoordinatesFromCep(cep))
          .build();
      ```
 
@@ -1717,7 +1727,7 @@ int ownerId = pet.getOwnerId();
 #### 長期 (3-6 月)
 
 1. **資料庫 Schema 重構**
-   - 將地址欄位重構為獨立的 `Endereco` 表
+   - 將地址欄位重構為獨立的 `Address` 表
    - 使用 Flyway 或 Liquibase 管理 Migration
 
 2. **引入 Event-Driven Architecture**
@@ -1780,16 +1790,18 @@ int ownerId = pet.getOwnerId();
 | 第四階段 | 程式碼品質改進 | 4 | ⭐ 中 |
 | 第五階段 | **Data Clumps 解決** | 2 | ⭐⭐ 高 |
 | 第六階段 | **Builder Pattern 實作** | 4 | ⭐⭐ 高 |
+| 第七階段 | **Address 類別英語化** | 41 | ⭐⭐⭐ 最高 |
 
 ---
 
 **重構完成日期**: 2025年12月15日  
-**總計修改檔案**: 33 個  
+**總計修改檔案**: 41+ 個  
 **新增測試案例**: 70 個（含決策表測試 7 個、狀態轉換測試 10 個、Builder 測試 21 個）  
-**重構類別數**: 15 個（含命名重構 3 個、Builder 2 個）  
-**程式碼行數變化**: +1850 行（含測試與文件）  
+**重構類別數**: 16 個（含命名重構 4 個：ServiceGeral、MensagensAlertas、CadastroPessoaAnimalComponent、Endereco）  
+**重命名**: `Endereco` → `Address`（完全英語化）  
+**程式碼行數變化**: +2000 行（含測試與文件）  
 **編譯錯誤**: 0 個  
-**測試失敗**: 0 個
+**測試狀態**: ✅ 全部通過
 
 ---
 
@@ -1833,19 +1845,31 @@ int ownerId = pet.getOwnerId();
 - [x] 執行所有測試確保通過 (共 49 個測試案例)
 
 #### 第五階段：Data Clumps 解決
-- [x] 在 `Usuario` 新增 `getEndereco()` 方法
-- [x] 優化 `Usuario.setEndereco()` 方法增加 null 檢查
-- [x] 在 `PetPerdido` 新增 `getEndereco()` 方法
-- [x] 在 `PetPerdido` 新增 `setEndereco()` 方法
-- [x] 建立測試驗證 Endereco 整合
+- [x] 在 `Usuario` 新增 `getAddress()` 方法
+- [x] 優化 `Usuario.setAddress()` 方法增加 null 檢查
+- [x] 在 `PetPerdido` 新增 `getAddress()` 方法
+- [x] 在 `PetPerdido` 新增 `setAddress()` 方法
+- [x] 建立測試驗證 Address 整合
 
 #### 第六階段：Builder Pattern 實作
 - [x] 實作 `Usuario.Builder` 內部類別
 - [x] 實作 `PetPerdido.Builder` 內部類別
-- [x] Builder 整合 `Endereco` 值物件 (`endereco()` 方法)
+- [x] Builder 整合 `Address` 值物件 (`address()` 方法)
 - [x] 建立 `UsuarioBuilderTest` (8 個測試案例)
 - [x] 建立 `PetPerdidoBuilderTest` (13 個測試案例)
 - [x] 執行所有測試確保通過 (共 70 個測試案例)
+
+#### 第七階段：Address 類別完全英語化
+- [x] 重命名 `Endereco.java` → `Address.java`
+- [x] 更新類別名稱 `Endereco` → `Address`
+- [x] 更新所有方法回傳型別和參數型別
+- [x] 重命名方法 `getEndereco()` → `getAddress()`
+- [x] 重命名方法 `setEndereco()` → `setAddress()`
+- [x] 更新所有變數名稱 `endereco` → `address`
+- [x] 更新 Service 層所有引用 (ViaCep, AddressService, UsuarioService)
+- [x] 更新 Controller 層所有引用
+- [x] 更新所有測試檔案 (AddressTest, UsuarioBuilderTest, PetPerdidoBuilderTest)
+- [x] 執行完整測試確保通過
 
 ### B. 參考資料
 

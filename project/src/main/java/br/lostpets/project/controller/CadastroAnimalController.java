@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.lostpets.project.components.UserPetRegistrationForm;
-import br.lostpets.project.model.Endereco;
+import br.lostpets.project.model.Address;
 import br.lostpets.project.model.PetPerdido;
 import br.lostpets.project.model.Usuario;
 import br.lostpets.project.service.AddressService;
@@ -75,12 +75,12 @@ public class CadastroAnimalController {
 		Usuario usuario = usuarioService.verificarEmailUsuario(usuario1.getEmail());
 		
 		// Get coordinates from CEP using AddressService
-		Endereco endereco = addressService.getCoordinatesFromCep(petPerdido.getCep());
+		Address address = addressService.getCoordinatesFromCep(petPerdido.getCep());
 
 		petPerdido.setStatus("P");
-		if (endereco != null) {
-			petPerdido.setLatitude(endereco.getLatitude());
-			petPerdido.setLongitude(endereco.getLongitude());
+		if (address != null) {
+			petPerdido.setLatitude(address.getLatitude());
+			petPerdido.setLongitude(address.getLongitude());
 		} else {
 			logger.warn("Could not retrieve coordinates for CEP: {}", petPerdido.getCep());
 		}

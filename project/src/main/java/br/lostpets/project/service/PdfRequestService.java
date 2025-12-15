@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import br.lostpets.project.model.Endereco;
+import br.lostpets.project.model.Address;
 import br.lostpets.project.model.InfoPet;
 import br.lostpets.project.model.PetPerdido;
 
