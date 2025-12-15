@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.lostpets.project.components.CadastroPessoaAnimalComponent;
+import br.lostpets.project.components.UserPetRegistrationForm;
 import br.lostpets.project.model.Endereco;
 import br.lostpets.project.model.PetPerdido;
 import br.lostpets.project.model.Usuario;
@@ -58,7 +58,7 @@ public class CadastroAnimalController {
 	@GetMapping("/LostPets/Cadastro-Animal-Perdido")
 	public ModelAndView PaginaCadastroAnimalPerdido() {
 		modelAndView = new ModelAndView();
-		CadastroPessoaAnimalComponent cadastroPessoaAnimal = new CadastroPessoaAnimalComponent();
+		UserPetRegistrationForm cadastroPessoaAnimal = new UserPetRegistrationForm();
 		modelAndView.addObject("pet", cadastroPessoaAnimal);
 		modelAndView.setViewName("cadastroAnimalPerdido");
 		return modelAndView;
@@ -66,7 +66,7 @@ public class CadastroAnimalController {
 
 	@PostMapping("/LostPets/Cadastro-Animal-Perdido")
 	public ModelAndView cadastroAnimalPerdido(@RequestParam(value = "files") MultipartFile[] files,
-			CadastroPessoaAnimalComponent cadastroPessoaAnimal) throws IOException, GeneralSecurityException {
+			UserPetRegistrationForm cadastroPessoaAnimal) throws IOException, GeneralSecurityException {
 
 		Usuario usuario1 = cadastroPessoaAnimal.getUsuario();
 		PetPerdido petPerdido = cadastroPessoaAnimal.getPetPerdido();

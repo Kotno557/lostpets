@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.lostpets.project.service.ServiceGeral;
+import br.lostpets.project.service.DateTimeService;
 
 @Entity
 @Table(name="PETS_PERDIDO")
@@ -47,7 +47,7 @@ public class PetPerdido {
 	private List<AnimaisAchados> animaisAchados;
 	
 	private String dataHora() {
-		return new ServiceGeral().getDateHour();
+		return new DateTimeService().getDateHour();
 	}
 
 	public PetPerdido() {}

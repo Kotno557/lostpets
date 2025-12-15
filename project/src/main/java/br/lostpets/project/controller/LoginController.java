@@ -50,14 +50,14 @@ public class LoginController {
 			String mensagem;
 			if(msn) {
 				msn = !msn;
-				mensagem = MensagensAlertas.EMAIL_SENHA_INCORRETO.getMensagem();
+				mensagem = AlertMessages.EMAIL_PASSWORD_INCORRECT.getMessage();
 			}
 			else if(CadastroAnimalController.isCadastrado()) {
 				CadastroAnimalController.setCadastrado(false);
-				mensagem = MensagensAlertas.PET_CADASTRADO_SUCESSO.getMensagem();
+				mensagem = AlertMessages.PET_REGISTERED_SUCCESS.getMessage();
 			}
 			else {
-				mensagem = MensagensAlertas.VAZIO.getMensagem(); 
+				mensagem = AlertMessages.EMPTY.getMessage(); 
 			}
 			
 			model.addAttribute("mensagem", mensagem);

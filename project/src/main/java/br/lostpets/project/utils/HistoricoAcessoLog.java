@@ -11,7 +11,7 @@ import java.util.Vector;
 
 import org.springframework.stereotype.Service;
 
-import br.lostpets.project.service.ServiceGeral;
+import br.lostpets.project.service.DateTimeService;
 
 @Service
 public class HistoricoAcessoLog {
@@ -23,12 +23,12 @@ public class HistoricoAcessoLog {
 
 	String[][] acesso = new String[1][3];
 
-	private ServiceGeral serviceGeral = new ServiceGeral();
+	private DateTimeService dateTimeService = new DateTimeService();
 
 	public void dataHora(String nomeUsuario) {
 		acesso[0][0] = nomeUsuario;
-		acesso[0][1] = serviceGeral.getDate();
-		acesso[0][2] = serviceGeral.getHour();
+		acesso[0][1] = dateTimeService.getDate();
+		acesso[0][2] = dateTimeService.getHour();
 		new HistoricoAcessoLog().escreverLog(acesso);
 
 	}

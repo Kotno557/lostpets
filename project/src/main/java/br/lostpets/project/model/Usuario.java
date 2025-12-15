@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.lostpets.project.service.ServiceGeral;
+import br.lostpets.project.service.DateTimeService;
 
 @Entity
 @Table(name = "USUARIO")
@@ -46,7 +46,7 @@ public class Usuario{
 	private List<AnimaisAchados> animaisAchados;	
 	
 	private String dataHora() {
-		return new ServiceGeral().getDateHour();
+		return new DateTimeService().getDateHour();
 	}
 
 	public Usuario() {}

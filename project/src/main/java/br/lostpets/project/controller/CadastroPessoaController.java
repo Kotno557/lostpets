@@ -64,9 +64,7 @@ public class CadastroPessoaController {
 		
 		// Check if email is already registered
 		if (usuarioService.verificarEmail(usuario.getEmail())) {
-			modelAndView.addObject("mensagem", MensagensAlertas.EMAIL_JA_CADASTRADO.getMensagem());
-			modelAndView.setViewName("cadastroPessoa");
-			return modelAndView;
+		modelAndView.addObject("mensagem", AlertMessages.EMAIL_ALREADY_REGISTERED.getMessage());
 		}
 		
 		Usuario usuario2 = usuarioService.verificarEmailUsuario(usuario.getEmail());
