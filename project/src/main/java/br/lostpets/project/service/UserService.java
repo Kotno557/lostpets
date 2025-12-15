@@ -7,31 +7,31 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.lostpets.project.model.AnimaisAchados;
+import br.lostpets.project.model.FoundAnimal;
 import br.lostpets.project.model.Address;
-import br.lostpets.project.model.PontosUsuario;
-import br.lostpets.project.model.Usuario;
-import br.lostpets.project.repository.AnimaisAchadosRepository;
-import br.lostpets.project.repository.UsuarioRepository;
+import br.lostpets.project.model.UserPoints;
+import br.lostpets.project.model.User;
+import br.lostpets.project.repository.FoundAnimalRepository;
+import br.lostpets.project.repository.UserRepository;
 
 @Service
-public class UsuarioService {
+public class UserService {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UserRepository usuarioRepository;
 
 	@Autowired
-	private AnimaisAchadosRepository animaisAchados;
+	private FoundAnimalRepository animaisAchados;
 
-	public List<Usuario> encontrarTodos() {
+	public List<User> encontrarTodos() {
 		return usuarioRepository.findAll();
 	}
 
-	public Usuario encontrar(int id) {
-		return usuarioRepository.unicoUsuario(id);
+	public User encontrar(int id) {
+		return usuarioRepository.getUser(id);
 	}
 	
-	public Usuario salvarUsuario(Usuario usuario) {
+	public User saveUser(User usuario) {
 
 		if (usuario.getCep() != null) {
 			ViaCep viaCep = new ViaCep();
@@ -42,24 +42,24 @@ public class UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 
-	public Usuario emailSenha(String email, String senha) {
+	public User emailSenha(String email, String senha) {
 		return usuarioRepository.validarAcesso(email, senha);
 	}
 
-	public Usuario verificarEmailUsuario(String email) {
+	public User verifyEmailUser(String email) {
 		return usuarioRepository.encontrarEmail(email);
 	}
 
 	public boolean verificarEmail(String email) {
-		Usuario usuario = usuarioRepository.encontrarEmail(email);
+		User usuario = usuarioRepository.encontrarEmail(email);
 		if (usuario != null) {
 			return (usuario.getCep() != null) && (usuario.getSenha() != null);
 		}
 		return false;
 	}
 
-	public int totalPontosUsuario(Integer idUsuario) {
-		Usuario usuario = usuarioRepository.getOne(idUsuario);
+	public int totalUserPoints(Integer idUser) {
+		User usuario = usuarioRepository.getOne(idUser);
 		
 		if(usuario == null) {
 			return 0;
@@ -68,25 +68,25 @@ public class UsuarioService {
 			return 0;
 		}
 		
-		Integer total = animaisAchados.totalPontosUsuario(usuario);
+		Integer total = animaisAchados.totalUserPoints(usuario);
 		if (total == null) {
 			return 0;
 		}
 		return total;
 	}
 
-	public List<PontosUsuario> totalPontosUsuarioTodosUsuario() {
-		List<AnimaisAchados> animaisEncontrados = animaisAchados.findAllByStatus("A");
-		List<Usuario> usuarios = usuarioRepository.findAll();
+	public List<UserPoints> totalUserPointsTodosUsuario() {
+		List<FoundAnimal> animaisEncontrados = animaisAchados.findAllByStatus("A");
+		List<User> usuarios = usuarioRepository.findAll();
 		usuarios.removeIf(usuario -> usuario.getSenha() == null);
-		List<PontosUsuario> pontosUsuario = new ArrayList<>();
+		List<UserPoints> pontosUsuario = new ArrayList<>();
 
 		for (int i = 0; i < usuarios.size(); i++) {
-			Usuario u = usuarios.get(i);
+			User u = usuarios.get(i);
 			int petsAchados = 0;
-			pontosUsuario.add(new PontosUsuario(u.getIdPessoa(), 0, u.getNome(), petsAchados));
+			pontosUsuario.add(new UserPoints(u.getIdPessoa(), 0, u.getNome(), petsAchados));
 			for (int j = 0; j < animaisEncontrados.size(); j++) {
-				AnimaisAchados animal = animaisEncontrados.get(j);
+				FoundAnimal animal = animaisEncontrados.get(j);
 				if (u.getIdPessoa() == animal.getUsuarioAchou().getIdPessoa()) {
 					int pontos = pontosUsuario.get(i).getPontos() + animal.getPontos();
 					pontosUsuario.get(i).setPontos(pontos);
@@ -96,7 +96,7 @@ public class UsuarioService {
 		}
 		pontosUsuario.removeIf(usuario -> usuario.getPontos() < 1);
 		
-		pontosUsuario.sort(Comparator.comparing(PontosUsuario::getPontos).reversed());
+		pontosUsuario.sort(Comparator.comparing(UserPoints::getPontos).reversed());
 		return pontosUsuario;
 	}
 

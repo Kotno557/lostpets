@@ -13,36 +13,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.lostpets.project.model.PetPerdido;
-import br.lostpets.project.model.Usuario;
-import br.lostpets.project.service.PetPerdidoService;
+import br.lostpets.project.model.LostPet;
+import br.lostpets.project.model.User;
+import br.lostpets.project.service.LostPetService;
 import br.lostpets.project.service.SessionService;
-import br.lostpets.project.service.UsuarioService;
+import br.lostpets.project.service.UserService;
 import br.lostpets.project.utils.HistoricoAcessoLog;
 
 @Controller
 public class LoginController {
 
 	@Autowired
-	private PetPerdidoService petPerdidoService;
+	private LostPetService petPerdidoService;
 	@Autowired
-	private UsuarioService usuarioService;
+	private UserService usuarioService;
 	@Autowired
 	private HistoricoAcessoLog historicoAcessoLog;
 	@Autowired
 	private SessionService session;
 	
-	private Usuario usuario;
+	private User usuario;
 	private ModelAndView modelAndView;
 	private boolean msn = false; 	
 	
 	@RequestMapping(value = { "/", "/LostPets" }, method = RequestMethod.GET)
-	public String loginPage(Usuario usuario, Model model) {
-		List<PetPerdido> pets;		
+	public String loginPage(User usuario, Model model) {
+		List<LostPet> pets;		
 		pets = petPerdidoService.encontrarPetsAtivosNNull();
 		model.addAttribute("fotoAnimais", pets);
 		System.err.println("cadastroAnimalController: "+CadastroAnimalController.isCadastrado());
-		if (session.existsSessionUsuario()) {
+		if (session.existsUserSession()) {
 			historicoAcessoLog.dataHora(usuario.getNome());
 			return "redirect:/Dashboard";
 			
@@ -66,13 +66,13 @@ public class LoginController {
 	}
 
 	@PostMapping("/LostPets")
-	public ModelAndView logar(@Valid Usuario usuario) {
+	public ModelAndView logar(@Valid User usuario) {
 		
 		usuario = usuarioService.emailSenha(usuario.getEmail(), usuario.getSenha());
 		if (usuario != null) {
 			modelAndView = new ModelAndView("redirect:/Dashboard");
 			historicoAcessoLog.dataHora(usuario.getNome());
-			session.setSessionUsuario(usuario);
+			session.setUserSession(usuario);
 			
 		} else {
 			modelAndView = new ModelAndView("redirect:/LostPets");
@@ -83,9 +83,9 @@ public class LoginController {
 
 	@GetMapping("/logoff")
 	public ModelAndView logoff() {
-		session.setSessionUsuario(null);
+		session.setUserSession(null);
 		modelAndView = new ModelAndView();
-		usuario = new Usuario();
+		usuario = new User();
 		modelAndView.addObject("usuario", usuario);
 		modelAndView.setViewName("redirect:/LostPets");
 		return modelAndView;

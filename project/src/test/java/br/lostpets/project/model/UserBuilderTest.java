@@ -13,12 +13,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UsuarioBuilderTest {
+public class UserBuilderTest {
 	
 	@Test
 	public void testBuilderWithAllFields() {
 		// Arrange & Act
-		Usuario usuario = Usuario.builder()
+		User usuario = User.builder()
 			.nome("João Silva")
 			.email("joao@email.com")
 			.senha("senha123")
@@ -55,7 +55,7 @@ public class UsuarioBuilderTest {
 	@Test
 	public void testBuilderWithMinimalFields() {
 		// Arrange & Act
-		Usuario usuario = Usuario.builder()
+		User usuario = User.builder()
 			.nome("Maria Santos")
 			.email("maria@email.com")
 			.build();
@@ -83,7 +83,7 @@ public class UsuarioBuilderTest {
 		address.setLongitude(-46.6333);
 		
 		// Act
-		Usuario usuario = Usuario.builder()
+		User usuario = User.builder()
 			.nome("Carlos Pereira")
 			.email("carlos@email.com")
 			.address(address)
@@ -105,7 +105,7 @@ public class UsuarioBuilderTest {
 	@Test
 	public void testBuilderWithNullAddress() {
 		// Arrange & Act
-		Usuario usuario = Usuario.builder()
+		User usuario = User.builder()
 			.nome("Ana Costa")
 			.email("ana@email.com")
 			.address(null)
@@ -121,8 +121,8 @@ public class UsuarioBuilderTest {
 	@Test
 	public void testBuilderMethodChaining() {
 		// Arrange & Act
-		Usuario.Builder builder = Usuario.builder();
-		Usuario.Builder resultBuilder = builder.nome("Test");
+		User.Builder builder = User.builder();
+		User.Builder resultBuilder = builder.nome("Test");
 		
 		// Assert - Verify method chaining returns same builder
 		assertSame(builder, resultBuilder);
@@ -146,7 +146,7 @@ public class UsuarioBuilderTest {
 		double longitude = -46.6;
 		
 		// Act - Create using builder
-		Usuario usuarioBuilder = Usuario.builder()
+		User usuarioBuilder = User.builder()
 			.nome(nome)
 			.telefoneFixo(telefoneFixo)
 			.telefoneCelular(telefoneCelular)
@@ -163,7 +163,7 @@ public class UsuarioBuilderTest {
 			.build();
 		
 		// Act - Create using constructor
-		Usuario usuarioConstructor = new Usuario(nome, telefoneFixo, telefoneCelular, email, senha,
+		User usuarioConstructor = new User(nome, telefoneFixo, telefoneCelular, email, senha,
 			idImagem, cep, rua, bairro, cidade, uf, latitude, longitude);
 		
 		// Assert - Both should have same values
@@ -186,7 +186,7 @@ public class UsuarioBuilderTest {
 		originalAddress.setLongitude(-46.6333);
 		
 		// Act
-		Usuario usuario = Usuario.builder()
+		User usuario = User.builder()
 			.nome("Test User")
 			.email("test@email.com")
 			.address(originalAddress)

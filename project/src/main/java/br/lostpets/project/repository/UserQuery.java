@@ -2,14 +2,14 @@ package br.lostpets.project.repository;
 
 import org.springframework.stereotype.Repository;
 
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.User;
 
 @Repository
-public class ConsultaUsuario {
+public class UserQuery {
 
 	//Para fins de funcionamento momentanel esta sendo utilizado para login if de verificar se email e senha são compativeis
 	
-	public boolean contemUsuario(Usuario usuario) {
+	public boolean containsUser(User usuario) {
 		
 		if("guilherme.mota".equalsIgnoreCase(usuario.getEmail()) && "guilherme.mota".equalsIgnoreCase(usuario.getSenha())) {
 			return true;

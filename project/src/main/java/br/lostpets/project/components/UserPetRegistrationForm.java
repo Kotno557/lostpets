@@ -1,7 +1,7 @@
 package br.lostpets.project.components;
 
-import br.lostpets.project.model.PetPerdido;
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.LostPet;
+import br.lostpets.project.model.User;
 
 /**
  * Form component for user and pet registration.
@@ -9,32 +9,32 @@ import br.lostpets.project.model.Usuario;
  * Refactored from CadastroPessoaAnimalComponent to UserPetRegistrationForm
  * for English naming consistency.
  * 
- * This component holds both Usuario (User) and PetPerdido (Lost Pet) data
+ * This component holds both User (User) and LostPet (Lost Pet) data
  * for combined registration forms.
  */
 public class UserPetRegistrationForm {
 
-	private PetPerdido petPerdido;
-	private Usuario usuario;
+	private LostPet petPerdido;
+	private User usuario;
 
 	public UserPetRegistrationForm() {
-		petPerdido = new PetPerdido();
-		usuario = new Usuario();
+		petPerdido = new LostPet();
+		usuario = new User();
 	}
 
-	public PetPerdido getPetPerdido() {
+	public LostPet getPetPerdido() {
 		return petPerdido;
 	}
 
-	public void setPetPerdido(PetPerdido petPerdido) {
+	public void setPetPerdido(LostPet petPerdido) {
 		this.petPerdido = petPerdido;
 	}
 
-	public Usuario getUsuario() {
+	public User getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(User usuario) {
 		this.usuario = usuario;
 	}
 }

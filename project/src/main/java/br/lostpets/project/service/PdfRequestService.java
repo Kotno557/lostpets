@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.lostpets.project.model.Address;
 import br.lostpets.project.model.InfoPet;
-import br.lostpets.project.model.PetPerdido;
+import br.lostpets.project.model.LostPet;
 
 @Service
 public class PdfRequestService {
@@ -28,7 +28,7 @@ public class PdfRequestService {
  	}
  	
  	
- 	public String downloadPdf(PetPerdido pet) {
+ 	public String downloadPdf(LostPet pet) {
  		InfoPet petRequest = new InfoPet(pet);
  		
  		this.webTarget = this.client.target(URL_REQUEST).path(""); 

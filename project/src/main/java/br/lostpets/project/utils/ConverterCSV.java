@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import br.lostpets.project.model.PetPerdido;
+import br.lostpets.project.model.LostPet;
 
 /**
  * Utility class for converting Excel files to CSV format and importing animal data.
@@ -122,7 +122,7 @@ public class ConverterCSV {
 		try {
 			in = new Scanner(new FileReader(file)).useDelimiter(";|\\r\\n");
 			
-			PetPerdido pet = new PetPerdido(null, null, null, null, null, null, null, 0, 0);
+			LostPet pet = new LostPet(null, null, null, null, null, null, null, 0, 0);
 
 			while (in.hasNext()) {
 				pet.setNomeAnimal(in.next());

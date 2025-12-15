@@ -14,13 +14,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PetPerdidoBuilderTest {
+public class LostPetBuilderTest {
 	
-	private Usuario testUsuario;
+	private User testUsuario;
 	
 	@Before
 	public void setUp() {
-		testUsuario = Usuario.builder()
+		testUsuario = User.builder()
 			.nome("Test Owner")
 			.email("owner@email.com")
 			.telefoneCelular("11999999999")
@@ -30,7 +30,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testBuilderWithAllFields() {
 		// Arrange & Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Rex")
 			.dataPerdido("2024-01-15")
@@ -71,7 +71,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testBuilderWithMinimalFields() {
 		// Arrange & Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Mimi")
 			.tipoAnimal("Gato")
@@ -101,7 +101,7 @@ public class PetPerdidoBuilderTest {
 		address.setLongitude(-46.6500);
 		
 		// Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Bobby")
 			.tipoAnimal("Cachorro")
@@ -123,7 +123,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testBuilderWithNullAddress() {
 		// Arrange & Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Luna")
 			.tipoAnimal("Gato")
@@ -141,7 +141,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testBuilderDefaultStatus() {
 		// Arrange & Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Max")
 			.tipoAnimal("Cachorro")
@@ -154,7 +154,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testBuilderCustomStatus() {
 		// Arrange & Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Bella")
 			.tipoAnimal("Cachorro")
@@ -168,8 +168,8 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testBuilderMethodChaining() {
 		// Arrange & Act
-		PetPerdido.Builder builder = PetPerdido.builder();
-		PetPerdido.Builder resultBuilder = builder.nomeAnimal("Test");
+		LostPet.Builder builder = LostPet.builder();
+		LostPet.Builder resultBuilder = builder.nomeAnimal("Test");
 		
 		// Assert - Verify method chaining returns same builder
 		assertSame(builder, resultBuilder);
@@ -188,7 +188,7 @@ public class PetPerdidoBuilderTest {
 		double longitude = -46.6;
 		
 		// Act - Create using builder
-		PetPerdido petBuilder = PetPerdido.builder()
+		LostPet petBuilder = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal(nomeAnimal)
 			.dataPerdido(dataPerdido)
@@ -201,7 +201,7 @@ public class PetPerdidoBuilderTest {
 			.build();
 		
 		// Act - Create using constructor
-		PetPerdido petConstructor = new PetPerdido(testUsuario, nomeAnimal, dataPerdido, descricao,
+		LostPet petConstructor = new LostPet(testUsuario, nomeAnimal, dataPerdido, descricao,
 			tipoAnimal, pathImg, cep, latitude, longitude);
 		
 		// Assert - Both should have same values
@@ -228,7 +228,7 @@ public class PetPerdidoBuilderTest {
 		originalAddress.setLongitude(-46.6333);
 		
 		// Act
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Spike")
 			.tipoAnimal("Cachorro")
@@ -251,7 +251,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testSetAddressMethod() {
 		// Arrange
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Fido")
 			.tipoAnimal("Cachorro")
@@ -282,7 +282,7 @@ public class PetPerdidoBuilderTest {
 	@Test
 	public void testSetAddressWithNull() {
 		// Arrange
-		PetPerdido pet = PetPerdido.builder()
+		LostPet pet = LostPet.builder()
 			.usuario(testUsuario)
 			.nomeAnimal("Buddy")
 			.tipoAnimal("Cachorro")

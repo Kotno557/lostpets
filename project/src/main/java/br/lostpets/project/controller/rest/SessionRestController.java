@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.User;
 import br.lostpets.project.service.SessionService;
 
 @CrossOrigin
@@ -19,8 +19,8 @@ public class SessionRestController {
 	private SessionService session;
 	
 	@GetMapping("/usuario")
-	public ResponseEntity<Usuario> getUsuarioSession(){
-		Usuario usuario = session.getUsuarioSession();
+	public ResponseEntity<User> getUsuarioSession(){
+		User usuario = session.getUsuarioSession();
 		return ResponseEntity.ok(usuario);
 	}
 	

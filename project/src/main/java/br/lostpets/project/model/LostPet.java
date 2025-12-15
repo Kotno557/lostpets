@@ -17,7 +17,7 @@ import br.lostpets.project.service.DateTimeService;
 
 @Entity
 @Table(name="PETS_PERDIDO")
-public class PetPerdido {
+public class LostPet {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class PetPerdido {
 	
 	@ManyToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name = "ID_USUARIO")
-	private Usuario usuario;
+	private User usuario;
 	
 	@Column(name="NOME_ANIMAL") private String nomeAnimal;
 	@Column(name="DATA_PERDIDO") private String dataPerdido;
@@ -44,15 +44,15 @@ public class PetPerdido {
 	@Column(name="ADD_DATA") private String addData = dataHora();
 	
 	@OneToMany(mappedBy = "petPerdido")
-	private List<AnimaisAchados> animaisAchados;
+	private List<FoundAnimal> animaisAchados;
 	
 	private String dataHora() {
 		return new DateTimeService().getDateHour();
 	}
 
-	public PetPerdido() {}
+	public LostPet() {}
 
-	public PetPerdido(Usuario usuario, String nomeAnimal, String dataPerdido, String descricao,
+	public LostPet(User usuario, String nomeAnimal, String dataPerdido, String descricao,
 			String tipoAnimal, String pathImg, String cep, double latitude, double longitude) {
 		this.usuario = usuario;
 		this.nomeAnimal = nomeAnimal;
@@ -67,7 +67,7 @@ public class PetPerdido {
 		this.addData = dataHora();
 	}
 
-	public PetPerdido(Usuario usuario, PetPerdido petPerdido) {
+	public LostPet(User usuario, LostPet petPerdido) {
 		this.usuario = usuario;
 		this.nomeAnimal = petPerdido.getNomeAnimal();
 		this.dataPerdido = petPerdido.getDataPerdido();
@@ -80,7 +80,7 @@ public class PetPerdido {
 		return idAnimal;
 	}
 
-	public Usuario getUsuario() {
+	public User getUsuario() {
 		return usuario;
 	}
 
@@ -214,7 +214,7 @@ public class PetPerdido {
 				+ animaisAchados + "]";
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(User usuario) {
 		this.usuario = usuario;
 	}
 	
@@ -280,7 +280,7 @@ public class PetPerdido {
 	 * 
 	 * Usage example:
 	 * <pre>
-	 * PetPerdido pet = PetPerdido.builder()
+	 * LostPet pet = PetPerdido.builder()
 	 *     .usuario(usuario)
 	 *     .nomeAnimal("Rex")
 	 *     .tipoAnimal("Cachorro")
@@ -289,7 +289,7 @@ public class PetPerdido {
 	 * </pre>
 	 */
 	public static class Builder {
-		private Usuario usuario;
+		private User usuario;
 		private String nomeAnimal;
 		private String dataPerdido;
 		private String status = "P";  // Default status
@@ -305,7 +305,7 @@ public class PetPerdido {
 		private double latitude;
 		private double longitude;
 		
-		public Builder usuario(Usuario usuario) {
+		public Builder usuario(User usuario) {
 			this.usuario = usuario;
 			return this;
 		}
@@ -402,8 +402,8 @@ public class PetPerdido {
 		 * 
 		 * @return PetPerdido instance with all configured fields
 		 */
-		public PetPerdido build() {
-			PetPerdido pet = new PetPerdido();
+		public LostPet build() {
+			LostPet pet = new LostPet();
 			pet.usuario = this.usuario;
 			pet.nomeAnimal = this.nomeAnimal;
 			pet.dataPerdido = this.dataPerdido;

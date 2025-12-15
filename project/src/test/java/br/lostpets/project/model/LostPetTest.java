@@ -5,21 +5,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Unit tests for PetPerdido entity
+ * Unit tests for LostPet entity
  */
-public class PetPerdidoTest {
+public class LostPetTest {
 
-    private Usuario usuario;
-    private PetPerdido petPerdido;
+    private User usuario;
+    private LostPet petPerdido;
 
     @Before
     public void setUp() {
-        usuario = new Usuario("João Silva", "joao@email.com", "11987654321", "1133334444");
+        usuario = new User("João Silva", "joao@email.com", "11987654321", "1133334444");
     }
 
     @Test
     public void testPetPerdidoCreation() {
-        petPerdido = new PetPerdido(
+        petPerdido = new LostPet(
             usuario,
             "Rex",
             "2023-12-01",
@@ -46,7 +46,7 @@ public class PetPerdidoTest {
 
     @Test
     public void testPetPerdidoDefaultStatus() {
-        petPerdido = new PetPerdido(
+        petPerdido = new LostPet(
             usuario,
             "Miau",
             "2023-12-05",
@@ -63,7 +63,7 @@ public class PetPerdidoTest {
 
     @Test
     public void testPetPerdidoSettersAndGetters() {
-        petPerdido = new PetPerdido();
+        petPerdido = new LostPet();
         
         petPerdido.setNomeAnimal("Bolinha");
         petPerdido.setDescricao("Cachorro pequeno");
@@ -84,7 +84,7 @@ public class PetPerdidoTest {
 
     @Test
     public void testCopyConstructor() {
-        PetPerdido original = new PetPerdido(
+        LostPet original = new LostPet(
             usuario,
             "Max",
             "2023-12-10",
@@ -96,8 +96,8 @@ public class PetPerdidoTest {
             -46.6333
         );
 
-        Usuario newUsuario = new Usuario("Maria", "maria@email.com", "11999999999", null);
-        PetPerdido copy = new PetPerdido(newUsuario, original);
+        User newUsuario = new User("Maria", "maria@email.com", "11999999999", null);
+        LostPet copy = new LostPet(newUsuario, original);
 
         assertEquals(original.getNomeAnimal(), copy.getNomeAnimal());
         assertEquals(original.getDataPerdido(), copy.getDataPerdido());

@@ -10,8 +10,8 @@ public class InfoPetTest {
 
     @Test
     public void testInfoPetFromPetPerdido() {
-        Usuario usuario = new Usuario("Ana", "ana@email.com", "11977776666", null);
-        PetPerdido pet = new PetPerdido(
+        User usuario = new User("Ana", "ana@email.com", "11977776666", null);
+        LostPet pet = new LostPet(
             usuario,
             "Luna",
             "2023-12-15",

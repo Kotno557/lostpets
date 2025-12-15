@@ -11,26 +11,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.User;
 
 @Transactional
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UsuarioServiceTest {
+public class UserServiceTest {
 
 	@Autowired
-	private UsuarioService usuarioService;
-	private Usuario usuario;
+	private UserService usuarioService;
+	private User usuario;
 	
 	@Before
 	public void setup() {
-		usuario = new Usuario("joao", "joao.joao", "celular", "telefone");
-		usuarioService.salvarUsuario(usuario);
+		usuario = new User("joao", "joao.joao", "celular", "telefone");
+		usuarioService.saveUser(usuario);
 	}
 	
 	@Test
 	public void usuarioCriado() {		
-		Usuario mesmoUsuario = usuarioService.encontrar(usuario.getIdPessoa());
+		User mesmoUsuario = usuarioService.encontrar(usuario.getIdPessoa());
 		assertEquals(usuario, mesmoUsuario);
 	}
 	

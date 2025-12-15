@@ -6,18 +6,18 @@ import static org.junit.Assert.*;
 import java.util.Date;
 
 /**
- * Unit tests for AnimaisAchados entity
+ * Unit tests for FoundAnimal entity
  */
-public class AnimaisAchadosTest {
+public class FoundAnimalTest {
 
-    private Usuario usuario;
-    private PetPerdido petPerdido;
-    private AnimaisAchados animaisAchados;
+    private User usuario;
+    private LostPet petPerdido;
+    private FoundAnimal animaisAchados;
 
     @Before
     public void setUp() {
-        usuario = new Usuario("Carlos", "carlos@email.com", "11988887777", null);
-        petPerdido = new PetPerdido(
+        usuario = new User("Carlos", "carlos@email.com", "11988887777", null);
+        petPerdido = new LostPet(
             usuario,
             "Totó",
             "2023-12-01",
@@ -33,7 +33,7 @@ public class AnimaisAchadosTest {
     @Test
     public void testAnimaisAchadosCreation() {
         Date dataEncontrado = new Date();
-        animaisAchados = new AnimaisAchados(
+        animaisAchados = new FoundAnimal(
             usuario,
             petPerdido,
             dataEncontrado,
@@ -53,7 +53,7 @@ public class AnimaisAchadosTest {
 
     @Test
     public void testAnimaisAchadosDefaultStatus() {
-        animaisAchados = new AnimaisAchados(
+        animaisAchados = new FoundAnimal(
             usuario,
             petPerdido,
             new Date(),
@@ -67,7 +67,7 @@ public class AnimaisAchadosTest {
 
     @Test
     public void testAnimaisAchadosSetters() {
-        animaisAchados = new AnimaisAchados();
+        animaisAchados = new FoundAnimal();
         
         animaisAchados.setUsuarioAchou(usuario);
         animaisAchados.setPetPerdido(petPerdido);
@@ -86,7 +86,7 @@ public class AnimaisAchadosTest {
 
     @Test
     public void testToString() {
-        animaisAchados = new AnimaisAchados(
+        animaisAchados = new FoundAnimal(
             usuario,
             petPerdido,
             new Date(),

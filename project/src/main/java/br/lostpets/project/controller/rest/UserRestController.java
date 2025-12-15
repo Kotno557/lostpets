@@ -10,40 +10,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.lostpets.project.model.PontosUsuario;
-import br.lostpets.project.model.Usuario;
-import br.lostpets.project.service.UsuarioService;
+import br.lostpets.project.model.UserPoints;
+import br.lostpets.project.model.User;
+import br.lostpets.project.service.UserService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/usuario")
-public class UsuarioRestController {
+public class UserRestController {
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UserService usuarioService;
 	
 	@GetMapping("")
-	public ResponseEntity<List<Usuario>> getTodosUsuario() {
-		List<Usuario> usuarios = usuarioService.encontrarTodos();
+	public ResponseEntity<List<User>> getAllUsers() {
+		List<User> usuarios = usuarioService.encontrarTodos();
 		usuarios.removeIf(u -> u.getSenha() == null);
 		return ResponseEntity.ok(usuarios);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> getTodosUsuario(@PathVariable("id") Integer id) {
-		Usuario usuario = usuarioService.encontrar(id);
+	public ResponseEntity<User> getAllUsers(@PathVariable("id") Integer id) {
+		User usuario = usuarioService.encontrar(id);
 		return ResponseEntity.ok(usuario);
 	}
 	
 	@GetMapping("/pontos/{id}")
-	public ResponseEntity<Integer> getTotalPontos(@PathVariable("id") Integer idUsuario) {
-		Integer total = usuarioService.totalPontosUsuario(idUsuario);
+	public ResponseEntity<Integer> getTotalPontos(@PathVariable("id") Integer idUser) {
+		Integer total = usuarioService.totalUserPoints(idUser);
 		return ResponseEntity.ok(total);
 	}
 	
 	@GetMapping("/pontos")
-	public ResponseEntity<List<PontosUsuario>> getTotalPontosTodosUsuario() {
-		List<PontosUsuario> pontosUsuario = usuarioService.totalPontosUsuarioTodosUsuario();
+	public ResponseEntity<List<UserPoints>> getTotalPontosTodosUsuario() {
+		List<UserPoints> pontosUsuario = usuarioService.totalUserPointsTodosUsuario();
 		return ResponseEntity.ok(pontosUsuario);
 	}
 	

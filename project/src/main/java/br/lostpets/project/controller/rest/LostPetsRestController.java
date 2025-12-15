@@ -10,42 +10,42 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.lostpets.project.model.PetPerdido;
-import br.lostpets.project.service.PetPerdidoService;
+import br.lostpets.project.model.LostPet;
+import br.lostpets.project.service.LostPetService;
 
 @RestController
 @RequestMapping("/petperdido")
-public class PetPerdidosRestController {
+public class LostPetsRestController {
 
 	@Autowired
-	PetPerdidoService petPerdidoService;
+	LostPetService petPerdidoService;
 
 	@CrossOrigin
 
 	@GetMapping("/usuario/{id}")
-	public ResponseEntity<List<PetPerdido>> getAllPetsPerdidosUsuario(@PathVariable("id") int id) {
-		List<PetPerdido> listPets = petPerdidoService.encontrarTodosByUsuario(id);
+	public ResponseEntity<List<LostPet>> getAllPetsPerdidosUsuario(@PathVariable("id") int id) {
+		List<LostPet> listPets = petPerdidoService.findAllByUser(id);
 		return ResponseEntity.ok(listPets);
 	}
 
 	@CrossOrigin
 	@GetMapping("/")
-	public ResponseEntity<List<PetPerdido>> getAllPetsPerdidosActive() {
-		List<PetPerdido> listPets = petPerdidoService.encontrarPetsAtivos();
+	public ResponseEntity<List<LostPet>> getAllPetsPerdidosActive() {
+		List<LostPet> listPets = petPerdidoService.encontrarPetsAtivos();
 		return ResponseEntity.ok(listPets);
 	}
 
 	@CrossOrigin
 	@GetMapping("/{idAnimal}")
-	public ResponseEntity<PetPerdido> getAllPetsPerdidosActiveById(@PathVariable("idAnimal") int idAnimal) {
-		PetPerdido listPets = petPerdidoService.encontrarUnicoPet(idAnimal);
+	public ResponseEntity<LostPet> getAllPetsPerdidosActiveById(@PathVariable("idAnimal") int idAnimal) {
+		LostPet listPets = petPerdidoService.encontrarUnicoPet(idAnimal);
 		return ResponseEntity.ok(listPets);
 	}
 
 	@CrossOrigin
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<PetPerdido>> getAllPetsPerdidosByNome(@PathVariable("nome") String nome) {
-		List<PetPerdido> listPets = petPerdidoService.encontrarAnimalComONome(nome);
+	public ResponseEntity<List<LostPet>> getAllPetsPerdidosByNome(@PathVariable("nome") String nome) {
+		List<LostPet> listPets = petPerdidoService.encontrarAnimalComONome(nome);
 		return ResponseEntity.ok(listPets);
 	}
 

@@ -1,6 +1,6 @@
 package br.lostpets.project.model;
 
-public class PontosUsuario {
+public class UserPoints {
 	
 	private int idUsuario;
 	private int pontos;
@@ -39,7 +39,7 @@ public class PontosUsuario {
 		this.quantidadePetsAchados = quantidadePetsAchados;
 	}
 	
-	public PontosUsuario(int idUsuario, int pontos, String nomeUsuario, int quantidadePetsAchados) {
+	public UserPoints(int idUsuario, int pontos, String nomeUsuario, int quantidadePetsAchados) {
 		super();
 		this.idUsuario = idUsuario;
 		this.pontos = pontos;

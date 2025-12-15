@@ -10,32 +10,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.User;
 
 @Transactional
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UsuarioRepositoryTest {
+public class UserRepositoryTest {
 
 	@Autowired 
-	private UsuarioRepository usuarioRepository;	
-	private Usuario usuario;
+	private UserRepository usuarioRepository;	
+	private User usuario;
 	
 	@Test
 	public void permitirUsuario() {
-		usuario = new Usuario("nome", "email", "celular", "telefone");
+		usuario = new User("nome", "email", "celular", "telefone");
 		usuarioRepository.save(usuario);
 		
-		Usuario usuarioEncontrado = usuarioRepository.getOne(usuario.getIdPessoa());
+		User usuarioEncontrado = usuarioRepository.getOne(usuario.getIdPessoa());
 		assertEquals(usuario, usuarioEncontrado);
 	}
 	
 	@Test
 	public void cadastraTodoUsuario() {
-		usuario = new Usuario("Nome", "Fixo", "Celular","Email","Senha","Imagem","Cep","Rua","Bairro","Cidade","Uf",0,0);
+		usuario = new User("Nome", "Fixo", "Celular","Email","Senha","Imagem","Cep","Rua","Bairro","Cidade","Uf",0,0);
 		usuarioRepository.save(usuario);
 		
-		Usuario usuarioEmail = usuarioRepository.validarAcesso(usuario.getEmail(), usuario.getSenha());
+		User usuarioEmail = usuarioRepository.validarAcesso(usuario.getEmail(), usuario.getSenha());
 		
 		assertEquals(usuario.getEmail(), usuarioEmail.getEmail());
 		assertEquals(usuario.getSenha(), usuarioEmail.getSenha());

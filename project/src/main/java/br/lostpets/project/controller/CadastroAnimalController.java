@@ -15,13 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.lostpets.project.components.UserPetRegistrationForm;
 import br.lostpets.project.model.Address;
-import br.lostpets.project.model.PetPerdido;
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.LostPet;
+import br.lostpets.project.model.User;
 import br.lostpets.project.service.AddressService;
 import br.lostpets.project.service.ImageStorageService;
 import br.lostpets.project.service.PdfRequestService;
-import br.lostpets.project.service.PetPerdidoService;
-import br.lostpets.project.service.UsuarioService;
+import br.lostpets.project.service.LostPetService;
+import br.lostpets.project.service.UserService;
 
 /**
  * Controller for lost pet registration.
@@ -38,13 +38,13 @@ public class CadastroAnimalController {
 	private static final Logger logger = LoggerFactory.getLogger(CadastroAnimalController.class);
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UserService usuarioService;
 	
 	@Autowired
 	private PdfRequestService pdf;
 
 	@Autowired
-	private PetPerdidoService petPerdidoService;
+	private LostPetService petPerdidoService;
 	
 	@Autowired
 	private ImageStorageService imageStorageService;
@@ -68,11 +68,11 @@ public class CadastroAnimalController {
 	public ModelAndView cadastroAnimalPerdido(@RequestParam(value = "files") MultipartFile[] files,
 			UserPetRegistrationForm cadastroPessoaAnimal) throws IOException, GeneralSecurityException {
 
-		Usuario usuario1 = cadastroPessoaAnimal.getUsuario();
-		PetPerdido petPerdido = cadastroPessoaAnimal.getPetPerdido();
+		User usuario1 = cadastroPessoaAnimal.getUsuario();
+		LostPet petPerdido = cadastroPessoaAnimal.getPetPerdido();
 
 		// Check if user already exists
-		Usuario usuario = usuarioService.verificarEmailUsuario(usuario1.getEmail());
+		User usuario = usuarioService.verifyEmailUser(usuario1.getEmail());
 		
 		// Get coordinates from CEP using AddressService
 		Address address = addressService.getCoordinatesFromCep(petPerdido.getCep());
@@ -99,7 +99,7 @@ public class CadastroAnimalController {
 			petPerdidoService.salvarPet(petPerdido);
 			logger.info("Saved pet {} for existing user {}", petPerdido.getNomeAnimal(), usuario.getEmail());
 		} else {
-			usuario1 = usuarioService.salvarUsuario(usuario1);
+			usuario1 = usuarioService.saveUser(usuario1);
 			petPerdido.setUsuario(usuario1);
 			petPerdidoService.salvarPet(petPerdido);
 			logger.info("Saved pet {} for new user {}", petPerdido.getNomeAnimal(), usuario1.getEmail());

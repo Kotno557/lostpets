@@ -10,10 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.lostpets.project.model.valueobject.PetStatus;
-import br.lostpets.project.repository.PetPerdidoRepository;
+import br.lostpets.project.repository.LostPetRepository;
 
 /**
- * State Transition Testing for PetPerdido status changes.
+ * State Transition Testing for LostPet status changes.
  * 
  * This test validates the state machine for pet status transitions:
  * 
@@ -42,22 +42,22 @@ import br.lostpets.project.repository.PetPerdidoRepository;
 public class PetStatusTransitionTest {
 
 	@Autowired
-	private PetPerdidoRepository petPerdidoRepository;
+	private LostPetRepository petPerdidoRepository;
 
-	private PetPerdido testPet;
-	private Usuario testUser;
+	private LostPet testPet;
+	private User testUser;
 
 	@Before
 	public void setUp() {
 		// Create test user
-		testUser = new Usuario();
+		testUser = new User();
 		testUser.setNome("Test Owner");
 		testUser.setEmail("owner@test.com");
 		testUser.setSenha("password123");
 		testUser.setTelefoneCelular("11987654321");
 
 		// Create test pet with initial PENDING status
-		testPet = new PetPerdido();
+		testPet = new LostPet();
 		testPet.setNomeAnimal("Buddy");
 		testPet.setDescricaoAnimal("Golden Retriever - Golden - Grande");
 		testPet.setTipoAnimal("Cachorro");
@@ -198,7 +198,7 @@ public class PetStatusTransitionTest {
 	public void testStatusPersistence() {
 		// Given: Pet with PENDING status is saved
 		testPet.setStatus("P");
-		PetPerdido savedPet = petPerdidoRepository.save(testPet);
+		LostPet savedPet = petPerdidoRepository.save(testPet);
 		int petId = savedPet.getIdAnimal();
 
 		// When: Status is updated to WAITING
@@ -206,7 +206,7 @@ public class PetStatusTransitionTest {
 		petPerdidoRepository.save(savedPet);
 
 		// Then: Status should persist correctly
-		PetPerdido retrievedPet = petPerdidoRepository.findById(petId).orElse(null);
+		LostPet retrievedPet = petPerdidoRepository.findById(petId).orElse(null);
 		assertNotNull("Pet should be found", retrievedPet);
 		assertEquals("Status should be WAITING", "W", retrievedPet.getStatus());
 
@@ -215,7 +215,7 @@ public class PetStatusTransitionTest {
 		petPerdidoRepository.save(retrievedPet);
 
 		// Then: Final status should be FOUND
-		PetPerdido finalPet = petPerdidoRepository.findById(petId).orElse(null);
+		LostPet finalPet = petPerdidoRepository.findById(petId).orElse(null);
 		assertNotNull("Pet should be found", finalPet);
 		assertEquals("Status should be FOUND", "A", finalPet.getStatus());
 

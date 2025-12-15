@@ -25,8 +25,8 @@ public class HistoricoAcessoLog {
 
 	private DateTimeService dateTimeService = new DateTimeService();
 
-	public void dataHora(String nomeUsuario) {
-		acesso[0][0] = nomeUsuario;
+	public void dataHora(String userName) {
+		acesso[0][0] = userName;
 		acesso[0][1] = dateTimeService.getDate();
 		acesso[0][2] = dateTimeService.getHour();
 		new HistoricoAcessoLog().escreverLog(acesso);

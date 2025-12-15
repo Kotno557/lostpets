@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.lostpets.project.model.InfoPet;
-import br.lostpets.project.model.PetPerdido;
+import br.lostpets.project.model.LostPet;
 
 /**
  * Factory for creating InfoPet DTOs.
@@ -17,14 +17,14 @@ public class InfoPetFactory {
     private static final Logger logger = LoggerFactory.getLogger(InfoPetFactory.class);
 
     /**
-     * Creates an InfoPet DTO from a PetPerdido entity.
+     * Creates an InfoPet DTO from a LostPet entity.
      * This method encapsulates the complex logic of extracting data from
-     * PetPerdido and its associated Usuario.
+     * LostPet and its associated Usuario.
      * 
-     * @param pet The PetPerdido entity
+     * @param pet The LostPet entity
      * @return InfoPet DTO, or null if pet is null
      */
-    public static InfoPet createFromPetPerdido(PetPerdido pet) {
+    public static InfoPet createFromPetPerdido(LostPet pet) {
         if (pet == null) {
             logger.warn("Attempted to create InfoPet from null PetPerdido");
             return null;
@@ -33,7 +33,7 @@ public class InfoPetFactory {
         try {
             return new InfoPet(pet);
         } catch (Exception e) {
-            logger.error("Error creating InfoPet from PetPerdido (ID: {})", pet.getIdAnimal(), e);
+            logger.error("Error creating InfoPet from LostPet (ID: {})", pet.getIdAnimal(), e);
             return null;
         }
     }
@@ -41,17 +41,17 @@ public class InfoPetFactory {
     /**
      * Creates an InfoPet with additional validation and logging.
      * 
-     * @param pet The PetPerdido entity
+     * @param pet The LostPet entity
      * @return InfoPet DTO with validated data
      */
-    public static InfoPet createValidatedInfoPet(PetPerdido pet) {
+    public static InfoPet createValidatedInfoPet(LostPet pet) {
         if (pet == null) {
-            logger.warn("Validation failed: PetPerdido is null");
+            logger.warn("Validation failed: LostPet is null");
             return null;
         }
 
         if (pet.getUsuario() == null) {
-            logger.warn("Validation failed: Usuario is null for PetPerdido ID: {}", pet.getIdAnimal());
+            logger.warn("Validation failed: User is null for LostPet ID: {}", pet.getIdAnimal());
             return null;
         }
 

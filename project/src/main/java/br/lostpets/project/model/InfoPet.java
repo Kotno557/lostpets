@@ -41,7 +41,7 @@ public class InfoPet {
 	 * 
 	 * @param pet The lost pet entity
 	 */
-	public InfoPet(PetPerdido pet) {
+	public InfoPet(LostPet pet) {
 		if (pet == null) {
 			logger.warn("Attempted to create InfoPet from null PetPerdido");
 			return;

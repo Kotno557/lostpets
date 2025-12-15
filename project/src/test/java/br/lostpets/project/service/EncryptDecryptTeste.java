@@ -1,7 +1,7 @@
 package br.lostpets.project.service;
 
 
-public class CriptografaDescriptografaTeste {
+public class EncryptDecryptTeste {
 
 	
 	

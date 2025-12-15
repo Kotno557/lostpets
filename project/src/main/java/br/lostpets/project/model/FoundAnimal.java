@@ -15,11 +15,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="ANIMAIS_ACHADOS")
-public class AnimaisAchados {
+public class FoundAnimal {
 
-	public AnimaisAchados() {}
+	public FoundAnimal() {}
 	
-	public AnimaisAchados(Usuario usuarioAchou, PetPerdido petPerdido, Date dataEncontrado, int pontos,
+	public FoundAnimal(User usuarioAchou, LostPet petPerdido, Date dataEncontrado, int pontos,
 			String latitude, String longitude) {
 		super();
 		this.usuarioAchou = usuarioAchou;
@@ -47,11 +47,11 @@ public class AnimaisAchados {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_USUARIO_ACHOU")
-	private Usuario usuarioAchou;
+	private User usuarioAchou;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_PET_PERDIDO")
-	private PetPerdido petPerdido;
+	private LostPet petPerdido;
 	
 	@Column(name="DATA_ENCONTRADO")	private Date dataEncontrado;
 	@Column(name="PONTOS") private int pontos;
@@ -61,16 +61,16 @@ public class AnimaisAchados {
 	@Column(name="ADD_DATA") private Date addData;
 	
 	
-	public Usuario getUsuarioAchou() {
+	public User getUsuarioAchou() {
 		return usuarioAchou;
 	}
-	public void setUsuarioAchou(Usuario usuarioAchou) {
+	public void setUsuarioAchou(User usuarioAchou) {
 		this.usuarioAchou = usuarioAchou;
 	}
-	public PetPerdido getPetPerdido() {
+	public LostPet getPetPerdido() {
 		return petPerdido;
 	}
-	public void setPetPerdido(PetPerdido petPerdido) {
+	public void setPetPerdido(LostPet petPerdido) {
 		this.petPerdido = petPerdido;
 	}
 	public Date getDataEncontrado() {

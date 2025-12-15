@@ -16,7 +16,7 @@ import br.lostpets.project.service.DateTimeService;
 
 @Entity
 @Table(name = "USUARIO")
-public class Usuario{
+public class User{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,7 @@ public class Usuario{
 	private int idPessoa;
 	
 	@OneToMany(mappedBy = "usuario")
-	private List<PetPerdido> idAnimal;
+	private List<LostPet> idAnimal;
 	
 	@Column(nullable = false, name = "NOME") private String nome;
 	@Column(nullable = true, name = "TELEFONE_FIXO") private String telefoneFixo;
@@ -43,15 +43,15 @@ public class Usuario{
 	@Column(nullable = true, name = "ULTIMO_ACESSO") @JsonIgnore private String ultimoAcesso;
 
 	@OneToMany(mappedBy = "usuarioAchou")
-	private List<AnimaisAchados> animaisAchados;	
+	private List<FoundAnimal> animaisAchados;	
 	
 	private String dataHora() {
 		return new DateTimeService().getDateHour();
 	}
 
-	public Usuario() {}
+	public User() {}
 	
-	public Usuario(String nome, String telefoneFixo, String telefoneCelular, String email, String senha,
+	public User(String nome, String telefoneFixo, String telefoneCelular, String email, String senha,
 			String idImagem, String cep, String rua, String bairro, String cidade, String uf, double latitude,
 			double longitude) {
 		this.nome = nome;
@@ -70,7 +70,7 @@ public class Usuario{
 		this.addCadastro = dataHora();
 	}
 	
-	public Usuario(String nome, String email, String celular, String telefone) {
+	public User(String nome, String email, String celular, String telefone) {
 		this.nome = nome;
 		this.email = email;	
 		this.telefoneCelular = celular;
@@ -264,7 +264,7 @@ public class Usuario{
 	 * 
 	 * Usage example:
 	 * <pre>
-	 * Usuario usuario = Usuario.builder()
+	 * User usuario = Usuario.builder()
 	 *     .nome("João Silva")
 	 *     .email("joao@email.com")
 	 *     .telefoneCelular("11987654321")
@@ -374,8 +374,8 @@ public class Usuario{
 		 * 
 		 * @return Usuario instance with all configured fields
 		 */
-		public Usuario build() {
-			Usuario usuario = new Usuario();
+		public User build() {
+			User usuario = new User();
 			usuario.nome = this.nome;
 			usuario.telefoneFixo = this.telefoneFixo;
 			usuario.telefoneCelular = this.telefoneCelular;

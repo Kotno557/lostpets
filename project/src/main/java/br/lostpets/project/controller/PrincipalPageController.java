@@ -15,7 +15,7 @@ public class PrincipalPageController {
 	
 	@GetMapping("/Dashboard")
 	public ModelAndView logado() {
-		if(session.existsSessionUsuario()) {	
+		if(session.existsUserSession()) {	
 			return new ModelAndView("principalPage");
 		}else {
 			return new ModelAndView("redirect:/LostPets");
@@ -23,7 +23,7 @@ public class PrincipalPageController {
 	}
 	
 	@GetMapping("/perfil/{id}")
-	public String abrirPerfilUsuario() {
+	public String openUserProfile() {
 		return "usuarioPerfil";
 	}
 	

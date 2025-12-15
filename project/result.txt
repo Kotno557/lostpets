@@ -1,0 +1,139 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/opt/homebrew/Cellar/maven/3.9.11/libexec/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for br.lostpets:project:jar:0.0.1-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: commons-io:commons-io:jar -> duplicate declaration of version 2.5 @ line 78, column 15
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ------------------------< br.lostpets:project >-------------------------
+[INFO] Building project 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 1 problem was encountered while building the effective model for org.javassist:javassist:jar:3.20.0-GA during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- resources:3.1.0:resources (default-resources) @ project ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 34 resources
+[INFO] 
+[INFO] --- compiler:3.8.0:compile (default-compile) @ project ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 41 source files to /Users/selab/Documents/lostpets/project/target/classes
+[INFO] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/utils/ConverterCSV.java: /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/utils/ConverterCSV.java uses or overrides a deprecated API.
+[INFO] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/utils/ConverterCSV.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/model/FoundAnimal.java:[70,16] cannot find symbol
+  symbol:   class PetPerdido
+  location: class br.lostpets.project.model.FoundAnimal
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/LostPetsRestController.java:[21,9] cannot find symbol
+  symbol:   class PetPerdidoService
+  location: class br.lostpets.project.controller.rest.LostPetsRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/LostPetsRestController.java:[40,31] cannot find symbol
+  symbol:   class PetPerdido
+  location: class br.lostpets.project.controller.rest.LostPetsRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/SessionRestController.java:[22,31] cannot find symbol
+  symbol:   class Usuario
+  location: class br.lostpets.project.controller.rest.SessionRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/UserRestController.java:[33,31] cannot find symbol
+  symbol:   class Usuario
+  location: class br.lostpets.project.controller.rest.UserRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/UserService.java:[62,57] cannot find symbol
+  symbol:   variable idUsuario
+  location: class br.lostpets.project.service.UserService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/UserService.java:[85,25] cannot find symbol
+  symbol:   class Usuario
+  location: class br.lostpets.project.service.UserService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/SessionService.java:[29,33] cannot find symbol
+  symbol:   class Usuario
+  location: class br.lostpets.project.service.SessionService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/LostPetsRestController.java:[41,17] cannot find symbol
+  symbol:   class PetPerdido
+  location: class br.lostpets.project.controller.rest.LostPetsRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/components/UserPetRegistrationForm.java:[21,34] cannot find symbol
+  symbol:   class PetPerdido
+  location: class br.lostpets.project.components.UserPetRegistrationForm
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/components/UserPetRegistrationForm.java:[22,31] cannot find symbol
+  symbol:   class Usuario
+  location: class br.lostpets.project.components.UserPetRegistrationForm
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/FoundAnimalService.java:[28,57] cannot find symbol
+  symbol:   variable idUsuario
+  location: class br.lostpets.project.service.FoundAnimalService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/FoundAnimalService.java:[86,17] cannot find symbol
+  symbol:   class AnimaisAchados
+  location: class br.lostpets.project.service.FoundAnimalService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/FoundAnimalRestController.java:[27,74] cannot find symbol
+  symbol:   variable idUsuario
+  location: class br.lostpets.project.controller.rest.FoundAnimalRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/UserRestController.java:[40,64] cannot find symbol
+  symbol:   variable idUsuario
+  location: class br.lostpets.project.controller.rest.UserRestController
+[INFO] 15 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.163 s
+[INFO] Finished at: 2025-12-15T14:29:26+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project project: Compilation failure: Compilation failure: 
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/model/FoundAnimal.java:[70,16] cannot find symbol
+[ERROR]   symbol:   class PetPerdido
+[ERROR]   location: class br.lostpets.project.model.FoundAnimal
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/LostPetsRestController.java:[21,9] cannot find symbol
+[ERROR]   symbol:   class PetPerdidoService
+[ERROR]   location: class br.lostpets.project.controller.rest.LostPetsRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/LostPetsRestController.java:[40,31] cannot find symbol
+[ERROR]   symbol:   class PetPerdido
+[ERROR]   location: class br.lostpets.project.controller.rest.LostPetsRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/SessionRestController.java:[22,31] cannot find symbol
+[ERROR]   symbol:   class Usuario
+[ERROR]   location: class br.lostpets.project.controller.rest.SessionRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/UserRestController.java:[33,31] cannot find symbol
+[ERROR]   symbol:   class Usuario
+[ERROR]   location: class br.lostpets.project.controller.rest.UserRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/UserService.java:[62,57] cannot find symbol
+[ERROR]   symbol:   variable idUsuario
+[ERROR]   location: class br.lostpets.project.service.UserService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/UserService.java:[85,25] cannot find symbol
+[ERROR]   symbol:   class Usuario
+[ERROR]   location: class br.lostpets.project.service.UserService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/SessionService.java:[29,33] cannot find symbol
+[ERROR]   symbol:   class Usuario
+[ERROR]   location: class br.lostpets.project.service.SessionService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/LostPetsRestController.java:[41,17] cannot find symbol
+[ERROR]   symbol:   class PetPerdido
+[ERROR]   location: class br.lostpets.project.controller.rest.LostPetsRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/components/UserPetRegistrationForm.java:[21,34] cannot find symbol
+[ERROR]   symbol:   class PetPerdido
+[ERROR]   location: class br.lostpets.project.components.UserPetRegistrationForm
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/components/UserPetRegistrationForm.java:[22,31] cannot find symbol
+[ERROR]   symbol:   class Usuario
+[ERROR]   location: class br.lostpets.project.components.UserPetRegistrationForm
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/FoundAnimalService.java:[28,57] cannot find symbol
+[ERROR]   symbol:   variable idUsuario
+[ERROR]   location: class br.lostpets.project.service.FoundAnimalService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/service/FoundAnimalService.java:[86,17] cannot find symbol
+[ERROR]   symbol:   class AnimaisAchados
+[ERROR]   location: class br.lostpets.project.service.FoundAnimalService
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/FoundAnimalRestController.java:[27,74] cannot find symbol
+[ERROR]   symbol:   variable idUsuario
+[ERROR]   location: class br.lostpets.project.controller.rest.FoundAnimalRestController
+[ERROR] /Users/selab/Documents/lostpets/project/src/main/java/br/lostpets/project/controller/rest/UserRestController.java:[40,64] cannot find symbol
+[ERROR]   symbol:   variable idUsuario
+[ERROR]   location: class br.lostpets.project.controller.rest.UserRestController
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

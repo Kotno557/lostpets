@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.lostpets.project.model.AnimaisAchados;
-import br.lostpets.project.service.AnimaisAchadosService;
+import br.lostpets.project.model.FoundAnimal;
+import br.lostpets.project.service.FoundAnimalService;
 @CrossOrigin
 @RestController
 @RequestMapping("/animaisAchados")
-public class AnimaisAchadosRestController {
+public class FoundAnimalRestController {
 
 	@Autowired
-	private AnimaisAchadosService animaisAchadosService;
+	private FoundAnimalService animaisAchadosService;
 	
-	@GetMapping("/byUsuario/{id}")
-	public ResponseEntity<List<AnimaisAchados>> getByUsuario(@PathVariable("id") Integer idUsuario){
-		List<AnimaisAchados> list = animaisAchadosService.getByUsuario(idUsuario);
+	@GetMapping("/byUser/{id}")
+	public ResponseEntity<List<FoundAnimal>> getByUser(@PathVariable("id") Integer idUser){
+		List<FoundAnimal> list = animaisAchadosService.getByUser(idUser);
 		return ResponseEntity.ok(list);		
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<AnimaisAchados>> getAllActive(){
-		List<AnimaisAchados> list = animaisAchadosService.getAllActive();
+	public ResponseEntity<List<FoundAnimal>> getAllActive(){
+		List<FoundAnimal> list = animaisAchadosService.getAllActive();
 		return ResponseEntity.ok(list);		
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<String> acharAnimal(@RequestBody AnimaisAchados animal){
+	public ResponseEntity<String> acharAnimal(@RequestBody FoundAnimal animal){
 		String response = animaisAchadosService.acharAnimal(animal);
 		return ResponseEntity.ok(response);
 	}

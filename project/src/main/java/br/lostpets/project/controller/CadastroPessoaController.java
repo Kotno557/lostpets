@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.User;
 import br.lostpets.project.service.ImageStorageService;
-import br.lostpets.project.service.UsuarioService;
+import br.lostpets.project.service.UserService;
 
 /**
  * Controller for user registration.
@@ -34,7 +34,7 @@ public class CadastroPessoaController {
 	private static final Logger logger = LoggerFactory.getLogger(CadastroPessoaController.class);
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UserService usuarioService;
 	
 	@Autowired
 	private ImageStorageService imageStorageService;
@@ -46,14 +46,14 @@ public class CadastroPessoaController {
 	
 	@GetMapping("/LostPets/Cadastro")
 	public ModelAndView cadastroPage() {
-		Usuario usuario = new Usuario();
+		User usuario = new User();
 		modelAndView.addObject("usuario", usuario);
 		modelAndView.setViewName("cadastroPessoa");
 		return modelAndView;
 	}
 
 	@PostMapping("/LostPets/Cadastro")
-	public ModelAndView cadastrar(@RequestParam(value = "files") MultipartFile[] files, @Valid Usuario usuario,
+	public ModelAndView cadastrar(@RequestParam(value = "files") MultipartFile[] files, @Valid User usuario,
 			BindingResult bindingResult) throws IOException, GeneralSecurityException  {
 
 		// Check for validation errors
@@ -67,7 +67,7 @@ public class CadastroPessoaController {
 		modelAndView.addObject("mensagem", AlertMessages.EMAIL_ALREADY_REGISTERED.getMessage());
 		}
 		
-		Usuario usuario2 = usuarioService.verificarEmailUsuario(usuario.getEmail());
+		User usuario2 = usuarioService.verifyEmailUser(usuario.getEmail());
 		
 		// Upload profile image using ImageStorageService
 		String imageUrl = imageStorageService.uploadUserProfileImage(files);
@@ -77,7 +77,7 @@ public class CadastroPessoaController {
 		
 		if (usuario2 == null) {
 			// New user registration
-			usuarioService.salvarUsuario(usuario);
+			usuarioService.saveUser(usuario);
 			logger.info("New user registered: {}", usuario.getEmail());
 			return login.logar(usuario);
 		} else {
@@ -91,7 +91,7 @@ public class CadastroPessoaController {
 			if (imageUrl != null) {
 				usuario2.setIdImagem(imageUrl);
 			}
-			usuarioService.salvarUsuario(usuario2);
+			usuarioService.saveUser(usuario2);
 			logger.info("Updated existing user: {}", usuario2.getEmail());
 			return login.logar(usuario);
 		}

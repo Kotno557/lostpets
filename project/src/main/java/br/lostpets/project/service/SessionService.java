@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.lostpets.project.model.Usuario;
+import br.lostpets.project.model.User;
 
 @Service
 public class SessionService {
@@ -15,18 +15,18 @@ public class SessionService {
 	@Autowired
 	private HttpSession session;
 	
-	public void setSessionUsuario(Usuario usuario) {
+	public void setUserSession(User usuario) {
 		this.session.setAttribute(SESSION_USUARIO, usuario);		
 	}
 	
-	public boolean existsSessionUsuario() {
+	public boolean existsUserSession() {
 		Object obj = this.session.getAttribute(SESSION_USUARIO);
 		return obj != null;
 	}
 	
-	public Usuario getUsuarioSession() {
-		if(!this.existsSessionUsuario()) { return null;}		
-		Usuario usuario = (Usuario)this.session.getAttribute(SESSION_USUARIO);
+	public User getUsuarioSession() {
+		if(!this.existsUserSession()) { return null;}		
+		User usuario = (User)this.session.getAttribute(SESSION_USUARIO);
 		return usuario;
 	}
 	
